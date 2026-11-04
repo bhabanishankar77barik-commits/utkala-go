@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>What You Like | Utkala Go</title>
+
+    <style>
+        /* ===== UTKALA GO THEME ===== */
+        :root {
+            --bg: #100b20;
+            --panel: #211638;
+            --panel-light: #2b1c45;
+            --purple: #9360f5;
+            --blue: #548bff;
+            --text: #f8f5ff;
+            --muted: #c0b5d6;
+            --border: rgba(194, 165, 255, 0.25);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(ellipse at top, #2a1749 0%, transparent 55%),
+                var(--bg);
+            min-height: 100vh;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* ===== NAVIGATION ===== */
+        .navbar {
+            padding: 18px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 18px;
+            flex-wrap: wrap;
+            background: rgba(16, 11, 32, 0.94);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand {
+            font-size: 25px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .brand span {
+            color: #ff9b62;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            padding: 11px 16px;
+            border-radius: 25px;
+            color: var(--muted);
+        }
+
+        .nav-links a:hover {
+            color: white;
+            background: var(--panel-light);
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            padding: 48px 20px 35px;
+            text-align: center;
+        }
+
+        .eyebrow {
+            display: inline-block;
+            padding: 8px 13px;
+            border: 1px solid var(--border);
+            border-radius: 25px;
+            color: #d6c0ff;
+            background: #ffffff08;
+            font-size: 13px;
+        }
+
+        .hero h1 {
+            margin: 18px 0 12px;
+            font-size: clamp(32px, 5vw, 48px);
+        }
+
+        .hero h1 span {
+            color: #b18aff;
+        }
+
+        .hero p {
+            max-width: 650px;
+            margin: auto;
+            line-height: 1.7;
+            color: var(--muted);
+        }
+
+        /* ===== PAGE LAYOUT ===== */
+        .container {
+            width: min(1100px, 92%);
+            margin: 0 auto 50px;
+        }
+
+        .filter-panel {
+            padding: clamp(18px, 4vw, 30px);
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            background: linear-gradient(
+                145deg,
+                rgba(48, 31, 77, 0.96),
+                rgba(28, 19, 48, 0.96)
+            );
+            box-shadow: 0 18px 50px #00000025;
+        }
+
+        .filter-panel h2 {
+            margin-top: 0;
+        }
+
+        .subtext {
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        /* ===== SEARCH ===== */
+        .search-box {
+            width: 100%;
+            padding: 15px 17px;
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            outline: none;
+            color: white;
+            background: #140e25;
+            font-size: 16px;
+        }
+
+        .search-box:focus {
+            border-color: var(--purple);
+        }
+
+        .search-box::placeholder {
+            color: #a99bbf;
+        }
+
+        /* ===== INTEREST OPTIONS ===== */
+        .interest-grid {
+            display: grid;
+            grid-template-columns: repeat(
+                auto-fit, minmax(min(100%, 190px), 1fr)
+            );
+            gap: 12px;
+            margin: 22px 0;
+        }
+
+        .interest-option {
+            position: relative;
+            display: block;
+            cursor: pointer;
+        }
+
+        .interest-option input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .interest-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-height: 70px;
+            padding: 15px;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            background: #ffffff05;
+            transition: 0.2s ease;
+        }
+
+        .interest-card:hover {
+            border-color: #a98aff;
+            transform: translateY(-2px);
+        }
+
+        .interest-option input:checked + .interest-card {
+            border-color: #a98aff;
+            background: linear-gradient(
+                120deg,
+                #8754db55,
+                #548bff30
+            );
+            box-shadow: inset 0 0 0 1px #a98aff40;
+        }
+
+        .interest-option input:checked + .interest-card::after {
+            content: "✓";
+            margin-left: auto;
+            color: #c9b2ff;
+            font-weight: bold;
+        }
+
+        .interest-option input:focus-visible + .interest-card {
+            outline: 2px solid white;
+            outline-offset: 3px;
+        }
+
+        .interest-icon {
+            display: grid;
+            place-items: center;
+            width: 38px;
+            height: 38px;
+            flex-shrink: 0;
+            border-radius: 11px;
+            background: #8b62d72b;
+            font-size: 20px;
+        }
+
+        .interest-name {
+            font-weight: bold;
+        }
+
+        /* ===== FORM BUTTONS ===== */
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .button {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            padding: 13px 21px;
+            border: 1px solid var(--border);
+            border-radius: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .button-primary {
+            color: white;
+            border: none;
+            background: linear-gradient(110deg, var(--purple), var(--blue));
+        }
+
+        .button-secondary {
+            color: white;
+            background: transparent;
+        }
+
+        .button:hover {
+            filter: brightness(1.12);
+        }
+
+        /* ===== RESULTS ===== */
+        .results-heading {
+            margin: 38px 0 20px;
+        }
+
+        .results-heading p {
+            color: var(--muted);
+        }
+
+        .destination-grid {
+            display: grid;
+            grid-template-columns: repeat(
+                auto-fit, minmax(min(100%, 270px), 1fr)
+            );
+            gap: 22px;
+        }
+
+        .destination-card {
+            min-width: 0;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            background: var(--panel);
+            transition: transform 0.2s ease;
+        }
+
+        .destination-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .destination-image {
+            width: 100%;
+            height: 210px;
+            overflow: hidden;
+            background: #ffffff08;
+        }
+
+        .destination-image img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .no-image {
+            display: grid;
+            place-items: center;
+            height: 100%;
+            color: var(--muted);
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .category {
+            color: #c1a3ff;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .card-content h3 {
+            margin: 9px 0;
+            font-size: 21px;
+        }
+
+        .card-content p {
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        .district {
+            font-size: 14px;
+        }
+
+        .details-link {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 11px 15px;
+            border-radius: 24px;
+            color: white;
+            background: linear-gradient(110deg, var(--purple), var(--blue));
+            font-weight: bold;
+        }
+
+        .empty-state {
+            padding: 25px;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            color: var(--muted);
+            background: var(--panel);
+            line-height: 1.7;
+        }
+
+        footer {
+            padding: 25px 15px;
+            text-align: center;
+            color: var(--muted);
+            border-top: 1px solid var(--border);
+        }
+
+        /* ===== MOBILE RESPONSIVENESS ===== */
+        @media (max-width: 600px) {
+            .navbar {
+                align-items: flex-start;
+            }
+
+            .nav-links {
+                width: 100%;
+            }
+
+            .hero {
+                padding-top: 35px;
+            }
+
+            .actions .button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ===== NAVIGATION ===== -->
+    <header class="navbar">
+        <a class="brand" href="{% url 'home' %}">
+            Utkal <span>Go</span>
+        </a>
+
+        <nav class="nav-links">
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'trip_builder' %}">Trip Builder &amp; Budget</a>
+        </nav>
+    </header>
+
+    <!-- ===== PAGE HERO ===== -->
+    <section class="hero">
+        <span class="eyebrow">YOUR INTERESTS · YOUR JOURNEY</span>
+
+        <h1>What <span>You Like</span></h1>
+
+        <p>
+            Waterfalls, temples, beaches, hill stations or dams?
+            Choose the experiences you love and explore destinations
+            across Odisha that match your interests.
+        </p>
+    </section>
+
+    <main class="container">
+
+        <!-- ===== INTEREST FILTER FORM ===== -->
+        <section class="filter-panel">
+
+            <h2>Choose your interests</h2>
+
+            <p class="subtext">
+                Select one or more categories. You can also search
+                for a destination by name.
+            </p>
+
+            <form method="get" action="{% url 'filter_destinations' %}">
+
+                <!-- SEARCH INPUT -->
+                <input
+                    class="search-box"
+                    type="search"
+                    name="q"
+                    value="{{ search_query }}"
+                    placeholder="Search destinations or districts..."
+                    aria-label="Search destinations or districts"
+                >
+
+                <!-- CATEGORY OPTIONS -->
+                <div class="interest-grid">
+
+                    {% for category in categories %}
+
+                    <label class="interest-option">
+
+                        <input
+                            type="checkbox"
+                            name="category"
+                            value="{{ category }}"
+                            {% if category in selected_categories %}checked{% endif %}
+                        >
+
+                        <span class="interest-card">
+
+                            <span class="interest-icon">
+
+                                {% if category == "Waterfall" %}
+                                    💧
+
+                                {% elif category == "Temple" %}
+                                    🛕
+
+                                {% elif category == "Beach" %}
+                                    🏖️
+
+                                {% elif category == "Wildlife" %}
+                                    🐘
+
+                                {% elif category == "Nature" %}
+                                    🌿
+
+                                {% elif category == "Adventure" %}
+                                    🧗
+
+                                {% elif category == "Hill Station" %}
+                                    ⛰️
+
+                                {% elif category == "Lake" %}
+                                    🛶
+
+                                {% elif category == "Dam" %}
+                                    🌊
+
+                                {% elif category == "Historical Places" %}
+                                    🏛️
+
+                                {% else %}
+                                    📍
+
+                                {% endif %}
+
+                            </span>
+
+                            <span class="interest-name">
+                                {{ category }}
+                            </span>
+
+                        </span>
+
+                    </label>
+
+                    {% endfor %}
+
+                </div>
+
+                <!-- FORM BUTTONS -->
+                <div class="actions">
+
+                    <button
+                        class="button button-primary"
+                        type="submit"
+                    >
+                        Explore My Interests →
+                    </button>
+
+                    <a
+                        class="button button-secondary"
+                        href="{% url 'filter_destinations' %}"
+                    >
+                        Clear Filters
+                    </a>
+
+                </div>
+
+            </form>
+
+        </section>
+
+        <!-- ===== DESTINATION RESULTS ===== -->
+        <section>
+
+            <div class="results-heading">
+
+                <h2>
+                    {% if has_filter %}
+                        Destinations for You
+                    {% else %}
+                        Explore Odisha
+                    {% endif %}
+                </h2>
+
+                <p>
+                    {{ destinations|length }}
+                    destination{{ destinations|length|pluralize }} found.
+                </p>
+
+            </div>
+
+            {% if destinations %}
+
+                <div class="destination-grid">
+
+                    {% for destination in destinations %}
+
+                    <article class="destination-card">
+
+                        <!-- DESTINATION IMAGE -->
+                        <div class="destination-image">
+
+                            {% if destination.image %}
+
+                                <img
+                                    src="{{ destination.image.url }}"
+                                    alt="{{ destination.name }}"
+                                    loading="lazy"
+                                >
+
+                            {% else %}
+
+                                <div class="no-image">
+                                    Image coming soon
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+                        <!-- DESTINATION INFORMATION -->
+                        <div class="card-content">
+
+                            <span class="category">
+                                {{ destination.category }}
+                            </span>
+
+                            <h3>
+                                {{ destination.name }}
+                            </h3>
+
+                            <p>
+                                {{ destination.description|truncatewords:22 }}
+                            </p>
+
+                            <p class="district">
+                                📍 {{ destination.district.name }}
+                            </p>
+
+                            <!-- DESTINATION DETAILS LINK -->
+                            <a
+                                class="details-link"
+                                href="{% url 'destination_detail' destination.pk %}"
+                            >
+                                Explore Destination →
+                            </a>
+
+                        </div>
+
+                    </article>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <!-- NO RESULTS MESSAGE -->
+                <div class="empty-state">
+
+                    <h3>No matching destinations found</h3>
+
+                    <p>
+                        Try another interest or clear your filters
+                        to explore all available destinations.
+                    </p>
+
+                    <a
+                        class="button button-primary"
+                        href="{% url 'filter_destinations' %}"
+                    >
+                        Show All Destinations
+                    </a>
+
+                </div>
+
+            {% endif %}
+
+        </section>
+
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        Utkala Go · Discover the beauty of Odisha
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,13 @@
+# Python
+__pycache__/
+*.py[cod]
+venv/
+.env
+
+# Local databases
+db.sqlite3
+
+# Collected production assets
+staticfiles/
+
+# Uploaded media backups are stored separately

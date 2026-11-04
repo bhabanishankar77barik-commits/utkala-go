@@ -1,0 +1,1075 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trip Builder | Utkal Go</title>
+
+    <style>
+        /* ===== GLOBAL STYLES ===== */
+        :root {
+            --bg: #100b20;
+            --panel: #1b1230;
+            --panel-light: #26183f;
+            --purple: #a78bfa;
+            --purple-bright: #8b5cf6;
+            --text: #f7f3ff;
+            --muted: #b9aecb;
+            --border: rgba(255,255,255,.12);
+            --green: #86efac;
+            --red: #fca5a5;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(ellipse at top left, #302052 0, transparent 42%),
+                var(--bg);
+            min-height: 100vh;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button, input {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        .container {
+            width: min(1120px, 92%);
+            margin: auto;
+        }
+
+        /* ===== NAVBAR ===== */
+        .navbar {
+            background: rgba(16, 11, 32, .92);
+            border-bottom: 1px solid var(--border);
+            padding: 18px 0;
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+        }
+
+        .logo {
+            color: #c4b5fd;
+            font-size: 25px;
+            font-weight: 800;
+            letter-spacing: .3px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .nav-links a:hover {
+            color: white;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            padding: 48px 0 28px;
+        }
+
+        .eyebrow {
+            color: var(--purple);
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        h1 {
+            font-size: clamp(32px, 5vw, 48px);
+            margin-bottom: 12px;
+        }
+
+        .hero p {
+            color: var(--muted);
+            line-height: 1.7;
+            max-width: 680px;
+        }
+
+        /* ===== PAGE GRID ===== */
+        .builder-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.35fr) minmax(300px, .85fr);
+            gap: 24px;
+            align-items: start;
+            padding-bottom: 55px;
+        }
+
+        .left-column, .right-column {
+            display: grid;
+            gap: 22px;
+        }
+
+        .panel {
+            background: rgba(27, 18, 48, .96);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 14px 38px rgba(0,0,0,.15);
+            min-width: 0;
+        }
+
+        .panel-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .panel-heading h2 {
+            font-size: 20px;
+        }
+
+        .muted {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .count-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 32px;
+            height: 32px;
+            padding: 0 9px;
+            border-radius: 20px;
+            background: #38255b;
+            color: #ddd6fe;
+            font-weight: bold;
+        }
+
+        /* ===== SELECTED DESTINATIONS ===== */
+        .selected-list {
+            display: grid;
+            gap: 12px;
+        }
+
+        .place-chip {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 15px;
+            border: 1px solid var(--border);
+            background: var(--panel-light);
+            border-radius: 13px;
+        }
+
+        .place-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 0;
+        }
+
+        .place-number {
+            width: 36px;
+            height: 36px;
+            flex-shrink: 0;
+            display: grid;
+            place-items: center;
+            background: #49316f;
+            color: #e9ddff;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .place-name {
+            overflow-wrap: anywhere;
+            font-weight: 600;
+        }
+
+        .place-subtitle {
+            margin-top: 4px;
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        .remove-btn {
+            width: 34px;
+            height: 34px;
+            flex-shrink: 0;
+            border: 1px solid rgba(252,165,165,.3);
+            border-radius: 9px;
+            background: rgba(127,29,29,.15);
+            color: var(--red);
+            font-size: 21px;
+        }
+
+        .remove-btn:hover {
+            background: rgba(127,29,29,.35);
+        }
+
+        .empty-state {
+            padding: 28px 15px;
+            border: 1px dashed rgba(255,255,255,.2);
+            border-radius: 14px;
+            text-align: center;
+        }
+
+        .empty-icon {
+            font-size: 34px;
+            margin-bottom: 10px;
+        }
+
+        .empty-state h3 {
+            margin-bottom: 8px;
+            font-size: 17px;
+        }
+
+        .empty-state p {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 17px;
+            border-radius: 11px;
+            border: 1px solid transparent;
+            font-weight: bold;
+            font-size: 14px;
+            transition: .2s;
+        }
+
+        .btn-primary {
+            color: white;
+            background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            filter: brightness(1.1);
+        }
+
+        .btn-secondary {
+            color: #ddd6fe;
+            background: #2a1c43;
+            border-color: var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: #382454;
+        }
+
+        .btn-full {
+            width: 100%;
+        }
+
+        /* ===== TRIP SETTINGS ===== */
+        .field {
+            margin-bottom: 22px;
+        }
+
+        .field label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .stepper {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 10px 12px;
+            background: var(--panel-light);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+
+        .stepper button {
+            width: 36px;
+            height: 36px;
+            border-radius: 9px;
+            border: 1px solid var(--border);
+            color: white;
+            background: #382454;
+            font-size: 21px;
+        }
+
+        .stepper button:disabled {
+            opacity: .35;
+            cursor: not-allowed;
+        }
+
+        .stepper-value {
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .stepper-value small {
+            display: block;
+            margin-top: 3px;
+            color: var(--muted);
+            font-size: 11px;
+            font-weight: normal;
+        }
+
+        /* ===== TRAVEL STYLE ===== */
+        .style-options {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 10px;
+        }
+
+        .style-option {
+            position: relative;
+            padding: 14px 8px;
+            border-radius: 13px;
+            background: var(--panel-light);
+            border: 1px solid var(--border);
+            text-align: center;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .style-option input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .style-option:has(input:checked) {
+            border-color: var(--purple);
+            background: rgba(139,92,246,.18);
+            box-shadow: inset 0 0 0 1px var(--purple);
+        }
+
+        .style-option:focus-within {
+            outline: 2px solid var(--purple);
+            outline-offset: 2px;
+        }
+
+        .style-icon {
+            display: block;
+            font-size: 25px;
+            margin-bottom: 8px;
+        }
+
+        .style-option strong {
+            display: block;
+            font-size: 13px;
+            margin-bottom: 5px;
+        }
+
+        .style-option small {
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        /* ===== BUDGET SUMMARY ===== */
+        .budget-total {
+            margin: 6px 0 22px;
+        }
+
+        .budget-total small {
+            display: block;
+            color: var(--muted);
+            margin-bottom: 8px;
+        }
+
+        .budget-total h3 {
+            color: #c4b5fd;
+            font-size: clamp(28px, 4vw, 37px);
+            overflow-wrap: anywhere;
+        }
+
+        .budget-total p {
+            color: var(--muted);
+            margin-top: 8px;
+            font-size: 12px;
+        }
+
+        .cost-line {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 13px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 13px;
+        }
+
+        .cost-line span:first-child {
+            color: var(--muted);
+        }
+
+        .cost-line strong {
+            text-align: right;
+        }
+
+        .budget-note {
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.6;
+            margin-top: 16px;
+        }
+
+        .status-message {
+            display: none;
+            margin-bottom: 15px;
+            padding: 11px 13px;
+            border-radius: 10px;
+            background: rgba(134,239,172,.1);
+            border: 1px solid rgba(134,239,172,.25);
+            color: var(--green);
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .status-message.error {
+            background: rgba(252,165,165,.1);
+            border-color: rgba(252,165,165,.25);
+            color: var(--red);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            padding: 24px 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 800px) {
+            .builder-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .right-column {
+                grid-row: auto;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .nav-inner {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .nav-links {
+                gap: 15px;
+            }
+
+            .panel {
+                padding: 18px;
+            }
+
+            .style-options {
+                gap: 7px;
+            }
+
+            .style-option {
+                padding: 12px 5px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ===== NAVBAR ===== -->
+    <header class="navbar">
+        <div class="container nav-inner">
+            <a class="logo" href="{% url 'home' %}">Utkal Go</a>
+
+            <nav class="nav-links" aria-label="Main navigation">
+                <a href="{% url 'home' %}">Home</a>
+                <a href="{% url 'home' %}#districts">Explore Odisha</a>
+                <a href="{% url 'trip_builder' %}">Trip Builder</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- ===== HERO ===== -->
+        <section class="hero">
+            <div class="eyebrow">Your journey, your way</div>
+            <h1>Build Your Odisha Trip</h1>
+            <p>
+                Choose your favourite destinations, select your travel style,
+                and get an estimated trip budget. Your selected destinations
+                are stored in this browser.
+            </p>
+        </section>
+
+        <div id="statusMessage" class="status-message" role="status"
+             aria-live="polite"></div>
+
+        <!-- ===== MAIN BUILDER LAYOUT ===== -->
+        <div class="builder-grid">
+
+            <!-- ===== LEFT COLUMN ===== -->
+            <div class="left-column">
+
+                <!-- SELECTED DESTINATIONS -->
+                <section class="panel">
+                    <div class="panel-heading">
+                        <div>
+                            <h2>Your Destinations</h2>
+                            <p class="muted">Places you've added from Explore Odisha.</p>
+                        </div>
+                        <span class="count-badge" id="placeCount">0</span>
+                    </div>
+
+                    <div id="selectedList" class="selected-list"></div>
+
+                    <div id="emptyMessage" class="empty-state">
+                        <div class="empty-icon">🧭</div>
+                        <h3>Your trip is waiting!</h3>
+                        <p>
+                            No destinations have been added yet. Visit a district
+                            and add places to start planning your trip.
+                        </p>
+                        <a href="{% url 'home' %}" class="btn btn-primary">
+                            Explore Destinations
+                        </a>
+                    </div>
+
+                    <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:18px;">
+                        <a href="{% url 'home' %}" class="btn btn-secondary">
+                            + Add More Places
+                        </a>
+                        <button type="button" id="clearTripBtn"
+                                class="btn btn-secondary">
+                            Clear Trip
+                        </button>
+                    </div>
+                </section>
+
+                <!-- TRIP SETTINGS -->
+                <section class="panel">
+                    <div class="panel-heading">
+                        <div>
+                            <h2>Trip Preferences</h2>
+                            <p class="muted">Adjust your trip to match your plans.</p>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label>Number of days</label>
+                        <div class="stepper">
+                            <button type="button" id="daysMinus"
+                                    aria-label="Decrease number of days">−</button>
+                            <div class="stepper-value">
+                                <span id="daysValue">3</span>
+                                <small>days</small>
+                            </div>
+                            <button type="button" id="daysPlus"
+                                    aria-label="Increase number of days">+</button>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label>Number of travellers</label>
+                        <div class="stepper">
+                            <button type="button" id="travellersMinus"
+                                    aria-label="Decrease number of travellers">−</button>
+                            <div class="stepper-value">
+                                <span id="travellersValue">2</span>
+                                <small>travellers</small>
+                            </div>
+                            <button type="button" id="travellersPlus"
+                                    aria-label="Increase number of travellers">+</button>
+                        </div>
+                    </div>
+
+                    <div class="field" style="margin-bottom:0;">
+                        <label>Choose your travel style</label>
+
+                        <div class="style-options">
+                            <label class="style-option">
+                                <input type="radio" name="travelStyle"
+                                       value="budget" checked>
+                                <span class="style-icon">🎒</span>
+                                <strong>Budget</strong>
+                                <small>Save more</small>
+                            </label>
+
+                            <label class="style-option">
+                                <input type="radio" name="travelStyle"
+                                       value="comfort">
+                                <span class="style-icon">🚗</span>
+                                <strong>Comfort</strong>
+                                <small>Balanced</small>
+                            </label>
+
+                            <label class="style-option">
+                                <input type="radio" name="travelStyle"
+                                       value="luxury">
+                                <span class="style-icon">✨</span>
+                                <strong>Luxury</strong>
+                                <small>Premium</small>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- ===== RIGHT COLUMN ===== -->
+            <aside class="right-column">
+                <section class="panel">
+                    <div class="panel-heading">
+                        <div>
+                            <h2>Estimated Budget</h2>
+                            <p class="muted">An approximate cost for your trip.</p>
+                        </div>
+                    </div>
+
+                    <div class="budget-total">
+                        <small>Estimated total for everyone</small>
+                        <h3 id="totalBudget">₹0</h3>
+                        <p id="budgetSummary">Add destinations to begin planning.</p>
+                    </div>
+
+                    <div class="cost-line">
+                        <span>Accommodation</span>
+                        <strong id="stayCost">₹0</strong>
+                    </div>
+
+                    <div class="cost-line">
+                        <span>Food and drinks</span>
+                        <strong id="foodCost">₹0</strong>
+                    </div>
+
+                    <div class="cost-line">
+                        <span>Local transport</span>
+                        <strong id="transportCost">₹0</strong>
+                    </div>
+
+                    <div class="cost-line">
+                        <span>Activities and entry</span>
+                        <strong id="activityCost">₹0</strong>
+                    </div>
+
+                    <div class="cost-line">
+                        <span>Estimated per person</span>
+                        <strong id="perPersonCost">₹0</strong>
+                    </div>
+
+                    <p class="budget-note">
+                        These are illustrative planning estimates, not live
+                        prices or bookings. Actual costs depend on your route,
+                        season, accommodation, transport, and entry fees.
+                    </p>
+                </section>
+
+                <section class="panel">
+                    <h2 style="font-size:18px; margin-bottom:10px;">
+                        Planning Summary
+                    </h2>
+                    <p class="muted" id="planningSummary">
+                        Your trip details will appear here.
+                    </p>
+                </section>
+            </aside>
+        </div>
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <div class="container">
+            Utkal Go · Discover the beauty of Odisha
+        </div>
+    </footer>
+
+    <!-- ===== TRIP BUILDER JAVASCRIPT ===== -->
+    <script>
+        (function () {
+            "use strict";
+
+            const STORAGE_KEY = "utkalGoSelectedPlaces";
+
+            const state = {
+                selectedPlaces: [],
+                days: 3,
+                travellers: 2,
+                style: "budget"
+            };
+
+            const rates = {
+                budget: {
+                    stayPerPersonPerDay: 600,
+                    foodPerPersonPerDay: 350,
+                    transportPerPersonPerDay: 250,
+                    activityPerPersonPerDay: 200
+                },
+                comfort: {
+                    stayPerPersonPerDay: 1400,
+                    foodPerPersonPerDay: 650,
+                    transportPerPersonPerDay: 600,
+                    activityPerPersonPerDay: 400
+                },
+                luxury: {
+                    stayPerPersonPerDay: 3500,
+                    foodPerPersonPerDay: 1200,
+                    transportPerPersonPerDay: 1500,
+                    activityPerPersonPerDay: 900
+                }
+            };
+
+            const $ = id => document.getElementById(id);
+
+            function showStatus(message, isError = false) {
+                const status = $("statusMessage");
+                status.textContent = message;
+                status.classList.toggle("error", isError);
+                status.style.display = "block";
+            }
+
+            function hideStatus() {
+                const status = $("statusMessage");
+                status.style.display = "none";
+                status.textContent = "";
+                status.classList.remove("error");
+            }
+
+            function readPlaces() {
+                try {
+                    const saved = localStorage.getItem(STORAGE_KEY);
+
+                    if (!saved) {
+                        return [];
+                    }
+
+                    const parsed = JSON.parse(saved);
+
+                    if (!Array.isArray(parsed)) {
+                        console.error("Saved trip data is not an array.");
+                        return [];
+                    }
+
+                    return parsed.filter(place =>
+                        place &&
+                        place.id !== undefined &&
+                        place.id !== null &&
+                        place.name
+                    );
+                } catch (error) {
+                    console.error("Error reading trip destinations:", error);
+                    showStatus(
+                        "Your saved trip could not be read. Check browser storage.",
+                        true
+                    );
+                    return [];
+                }
+            }
+
+            function savePlaces() {
+                try {
+                    localStorage.setItem(
+                        STORAGE_KEY,
+                        JSON.stringify(state.selectedPlaces)
+                    );
+                    return true;
+                } catch (error) {
+                    console.error("Error saving trip destinations:", error);
+                    showStatus(
+                        "Could not save your trip. Check your browser storage settings.",
+                        true
+                    );
+                    return false;
+                }
+            }
+
+            function loadPlaces() {
+                state.selectedPlaces = readPlaces();
+            }
+
+            function formatCurrency(amount) {
+                return new Intl.NumberFormat("en-IN", {
+                    style: "currency",
+                    currency: "INR",
+                    maximumFractionDigits: 0
+                }).format(Math.round(amount));
+            }
+
+            function renderPlaces() {
+                const list = $("selectedList");
+                const emptyMessage = $("emptyMessage");
+
+                list.replaceChildren();
+
+                state.selectedPlaces.forEach((place, index) => {
+                    const row = document.createElement("div");
+                    row.className = "place-chip";
+
+                    const info = document.createElement("div");
+                    info.className = "place-info";
+
+                    const number = document.createElement("div");
+                    number.className = "place-number";
+                    number.textContent = String(index + 1);
+
+                    const textContainer = document.createElement("div");
+
+                    const name = document.createElement("div");
+                    name.className = "place-name";
+                    name.textContent = place.name;
+
+                    const subtitle = document.createElement("div");
+                    subtitle.className = "place-subtitle";
+                    subtitle.textContent = "Selected destination";
+
+                    textContainer.append(name, subtitle);
+                    info.append(number, textContainer);
+
+                    const removeButton = document.createElement("button");
+                    removeButton.type = "button";
+                    removeButton.className = "remove-btn";
+                    removeButton.textContent = "×";
+                    removeButton.setAttribute(
+                        "aria-label",
+                        "Remove " + place.name
+                    );
+
+                    removeButton.addEventListener("click", () => {
+                        const previous = [...state.selectedPlaces];
+
+                        state.selectedPlaces =
+                            state.selectedPlaces.filter(
+                                savedPlace =>
+                                    String(savedPlace.id) !== String(place.id)
+                            );
+
+                        if (savePlaces()) {
+                            hideStatus();
+                            renderPlaces();
+                            calculateBudget();
+                            showStatus(place.name + " removed from your trip.");
+                        } else {
+                            state.selectedPlaces = previous;
+                            renderPlaces();
+                        }
+                    });
+
+                    row.append(info, removeButton);
+                    list.appendChild(row);
+                });
+
+                $("placeCount").textContent =
+                    String(state.selectedPlaces.length);
+
+                emptyMessage.style.display =
+                    state.selectedPlaces.length === 0 ? "block" : "none";
+
+                $("clearTripBtn").disabled =
+                    state.selectedPlaces.length === 0;
+
+                $("clearTripBtn").style.opacity =
+                    state.selectedPlaces.length === 0 ? ".5" : "1";
+            }
+
+            function calculateBudget() {
+                const rate = rates[state.style];
+                const people = state.travellers;
+                const days = state.days;
+
+                const accommodation =
+                    rate.stayPerPersonPerDay * people * days;
+
+                const food =
+                    rate.foodPerPersonPerDay * people * days;
+
+                const transport =
+                    rate.transportPerPersonPerDay * people * days;
+
+                // A small illustrative activity estimate for each selected place.
+                const activities =
+                    rate.activityPerPersonPerDay *
+                    people *
+                    days +
+                    state.selectedPlaces.length * 100 * people;
+
+                const total =
+                    accommodation + food + transport + activities;
+
+                $("stayCost").textContent = formatCurrency(accommodation);
+                $("foodCost").textContent = formatCurrency(food);
+                $("transportCost").textContent = formatCurrency(transport);
+                $("activityCost").textContent = formatCurrency(activities);
+                $("totalBudget").textContent = formatCurrency(total);
+
+                $("perPersonCost").textContent =
+                    formatCurrency(people > 0 ? total / people : total);
+
+                $("budgetSummary").textContent =
+                    state.selectedPlaces.length === 0
+                        ? "Add destinations to personalise your trip."
+                        : "For " + people + " traveller" +
+                          (people === 1 ? "" : "s") +
+                          " across " + days + " day" +
+                          (days === 1 ? "" : "s") + ".";
+
+                $("planningSummary").textContent =
+                    state.selectedPlaces.length + " destination" +
+                    (state.selectedPlaces.length === 1 ? "" : "s") +
+                    " selected · " + days + " day" +
+                    (days === 1 ? "" : "s") +
+                    " · " + people + " traveller" +
+                    (people === 1 ? "" : "s") +
+                    " · " +
+                    state.style.charAt(0).toUpperCase() +
+                    state.style.slice(1) + " travel style.";
+            }
+
+            function updateSteppers() {
+                $("daysValue").textContent = state.days;
+                $("travellersValue").textContent = state.travellers;
+
+                $("daysMinus").disabled = state.days <= 1;
+                $("daysPlus").disabled = state.days >= 30;
+
+                $("travellersMinus").disabled = state.travellers <= 1;
+                $("travellersPlus").disabled = state.travellers >= 20;
+            }
+
+            function refreshAll() {
+                updateSteppers();
+                renderPlaces();
+                calculateBudget();
+            }
+
+            $("daysMinus").addEventListener("click", () => {
+                if (state.days > 1) {
+                    state.days--;
+                    refreshAll();
+                }
+            });
+
+            $("daysPlus").addEventListener("click", () => {
+                if (state.days < 30) {
+                    state.days++;
+                    refreshAll();
+                }
+            });
+
+            $("travellersMinus").addEventListener("click", () => {
+                if (state.travellers > 1) {
+                    state.travellers--;
+                    refreshAll();
+                }
+            });
+
+            $("travellersPlus").addEventListener("click", () => {
+                if (state.travellers < 20) {
+                    state.travellers++;
+                    refreshAll();
+                }
+            });
+
+            document.querySelectorAll('input[name="travelStyle"]')
+                .forEach(input => {
+                    input.addEventListener("change", () => {
+                        state.style = input.value;
+                        refreshAll();
+                    });
+                });
+
+            $("clearTripBtn").addEventListener("click", () => {
+                if (state.selectedPlaces.length === 0) {
+                    return;
+                }
+
+                const confirmed = window.confirm(
+                    "Remove all destinations from your trip?"
+                );
+
+                if (!confirmed) {
+                    return;
+                }
+
+                const previous = [...state.selectedPlaces];
+                state.selectedPlaces = [];
+
+                if (savePlaces()) {
+                    hideStatus();
+                    refreshAll();
+                    showStatus("All destinations have been removed.");
+                } else {
+                    state.selectedPlaces = previous;
+                    refreshAll();
+                }
+            });
+
+            // Refresh saved destinations when returning to this tab.
+            window.addEventListener("focus", () => {
+                const latest = readPlaces();
+
+                if (JSON.stringify(latest) !==
+                    JSON.stringify(state.selectedPlaces)) {
+                    state.selectedPlaces = latest;
+                    refreshAll();
+                }
+            });
+
+            // Refresh if another tab on the same origin changes the trip.
+            window.addEventListener("storage", event => {
+                if (event.key === STORAGE_KEY || event.key === null) {
+                    loadPlaces();
+                    refreshAll();
+                }
+            });
+
+            // Initialise the page.
+            try {
+                loadPlaces();
+                refreshAll();
+
+                if (state.selectedPlaces.length > 0) {
+                    showStatus(
+                        state.selectedPlaces.length +
+                        " saved destination(s) loaded successfully."
+                    );
+                }
+            } catch (error) {
+                console.error("Trip Builder initialisation failed:", error);
+                showStatus(
+                    "The Trip Builder could not finish loading. Open the browser console for details.",
+                    true
+                );
+            }
+        })();
+    </script>
+</body>
+</html>

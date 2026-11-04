@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ district.name }} Destinations | Utkal Go</title>
+
+    <style>
+        /* =========================================
+           SECTION: GLOBAL THEME
+        ========================================= */
+
+        :root {
+            --bg: #10091c;
+            --surface: #211633;
+            --surface-hover: #2d1e43;
+            --purple: #7c3aed;
+            --violet: #a78bfa;
+            --orange: #fb923c;
+            --text: #f8f5ff;
+            --muted: #c4b5d4;
+            --border: rgba(192, 132, 252, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            color: var(--text);
+            min-height: 100vh;
+            background:
+                radial-gradient(
+                    ellipse at 10% 5%,
+                    rgba(124, 58, 237, 0.18),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    ellipse at 90% 35%,
+                    rgba(79, 70, 229, 0.12),
+                    transparent 35%
+                ),
+                linear-gradient(145deg, #10091c, #171027, #10091c);
+            line-height: 1.6;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        button,
+        input,
+        select {
+            font: inherit;
+        }
+
+        button:focus-visible,
+        a:focus-visible,
+        input:focus-visible,
+        select:focus-visible {
+            outline: 2px solid var(--orange);
+            outline-offset: 3px;
+        }
+
+        /* =========================================
+           SECTION: NAVBAR
+        ========================================= */
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            padding: 16px 6%;
+            background: rgba(16, 9, 28, 0.92);
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(15px);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            text-decoration: none;
+            font-size: 25px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .brand-icon {
+            display: grid;
+            place-items: center;
+            width: 43px;
+            height: 43px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #7c3aed, #4f46e5);
+        }
+
+        .brand-name span {
+            color: var(--orange);
+        }
+
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .nav-links a {
+            padding: 9px 15px;
+            color: var(--muted);
+            text-decoration: none;
+            border: 1px solid transparent;
+            border-radius: 25px;
+            transition: 0.25s ease;
+        }
+
+        .nav-links a:hover {
+            color: white;
+            background: var(--surface);
+            border-color: var(--border);
+        }
+
+        .nav-links .trip-nav {
+            color: white;
+            background: linear-gradient(110deg, #7c3aed, #4f46e5);
+        }
+
+        /* =========================================
+           SECTION: PAGE HEADER
+        ========================================= */
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 42px auto 65px;
+        }
+
+        .district-header {
+            position: relative;
+            padding: 38px;
+            margin-bottom: 30px;
+            overflow: hidden;
+            background: linear-gradient(
+                135deg,
+                rgba(45, 30, 67, 0.97),
+                rgba(25, 17, 42, 0.97)
+            );
+            border: 1px solid var(--border);
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .eyebrow {
+            display: inline-block;
+            margin-bottom: 9px;
+            color: var(--orange);
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .district-header h1 {
+            font-size: clamp(30px, 5vw, 43px);
+            line-height: 1.2;
+            margin-bottom: 13px;
+        }
+
+        .district-header p {
+            max-width: 800px;
+            color: var(--muted);
+            line-height: 1.8;
+        }
+
+        .header-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 23px;
+        }
+
+        .header-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 20px;
+            border-radius: 26px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 14px;
+            transition: 0.25s ease;
+        }
+
+        .header-btn.primary {
+            background: linear-gradient(110deg, #7c3aed, #4f46e5);
+            color: white;
+        }
+
+        .header-btn.secondary {
+            color: var(--violet);
+            border: 1px solid var(--border);
+            background: rgba(124, 58, 237, 0.1);
+        }
+
+        .header-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(124, 58, 237, 0.25);
+        }
+
+        /* =========================================
+           SECTION: DESTINATION SEARCH AND FILTER
+        ========================================= */
+
+        .destination-tools {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin: 28px 0;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 220px;
+        }
+
+        .search-box input,
+        .category-filter select {
+            width: 100%;
+            padding: 14px 18px;
+            color: var(--text);
+            background: rgba(33, 22, 51, 0.95);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            outline: none;
+            transition: border-color 0.25s ease;
+        }
+
+        .search-box input::placeholder {
+            color: #a496b8;
+        }
+
+        .search-box input:focus,
+        .category-filter select:focus {
+            border-color: var(--violet);
+        }
+
+        .category-filter {
+            width: 230px;
+            max-width: 100%;
+        }
+
+        .category-filter select {
+            cursor: pointer;
+        }
+
+        .category-filter option {
+            color: white;
+            background: #211633;
+        }
+
+        .results-label {
+            margin-bottom: 18px;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        /* =========================================
+           SECTION: DESTINATION GRID
+        ========================================= */
+
+        .destination-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 24px;
+            align-items: stretch;
+        }
+
+        .destination-card {
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background: linear-gradient(
+                145deg,
+                rgba(40, 29, 59, 0.98),
+                rgba(25, 19, 43, 0.98)
+            );
+            border: 1px solid #514477;
+            border-radius: 21px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18);
+            transition:
+                transform 0.3s ease,
+                border-color 0.3s ease,
+                box-shadow 0.3s ease;
+        }
+
+        .destination-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--violet);
+            box-shadow: 0 15px 35px rgba(124, 58, 237, 0.18);
+        }
+
+        .destination-card.hidden {
+            display: none;
+        }
+
+        /* ===== RESPONSIVE DESTINATION IMAGES ===== */
+.destination-card img {
+    width: 100%;
+    height: 250px;
+    object-fit: contain;
+    object-position: center;
+    display: block;
+    background-color: #1b1230;
+}
+
+        .destination-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.45s ease;
+        }
+
+        .destination-card:hover .destination-image img {
+            transform: scale(1.05);
+        }
+
+        .image-placeholder {
+            display: grid;
+            place-items: center;
+            width: 100%;
+            height: 100%;
+            color: var(--violet);
+            font-size: 44px;
+        }
+
+        .destination-content {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            padding: 22px;
+        }
+
+        .category-tag {
+            display: inline-block;
+            align-self: flex-start;
+            max-width: 100%;
+            margin-bottom: 12px;
+            padding: 5px 11px;
+            overflow-wrap: anywhere;
+            color: var(--violet);
+            background: rgba(124, 58, 237, 0.15);
+            border: 1px solid rgba(167, 139, 250, 0.22);
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .destination-content h2 {
+            margin-bottom: 10px;
+            font-size: 21px;
+            line-height: 1.35;
+        }
+
+        .destination-content p {
+            margin-bottom: 20px;
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.8;
+            overflow-wrap: anywhere;
+        }
+
+        .card-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: auto;
+        }
+
+        .destination-button,
+        .add-to-trip-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 11px 14px;
+            border: 1px solid transparent;
+            border-radius: 25px;
+            font-size: 12px;
+            font-weight: 800;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition:
+                background 0.25s ease,
+                border-color 0.25s ease,
+                color 0.25s ease,
+                transform 0.25s ease;
+        }
+
+        .destination-button {
+            color: white;
+            background: linear-gradient(110deg, #7c3aed, #4f46e5);
+        }
+
+        .destination-button:hover {
+            background: linear-gradient(110deg, #9f67fa, #6d63f4);
+            transform: translateY(-2px);
+        }
+
+        .add-to-trip-btn {
+            color: var(--orange);
+            background: rgba(251, 146, 60, 0.08);
+            border-color: rgba(251, 146, 60, 0.4);
+        }
+
+        .add-to-trip-btn:hover {
+            color: white;
+            background: #9a4c17;
+            border-color: var(--orange);
+            transform: translateY(-2px);
+        }
+
+        .add-to-trip-btn.added {
+            color: #ddd6fe;
+            background: rgba(124, 58, 237, 0.22);
+            border-color: var(--violet);
+        }
+
+        .add-to-trip-btn.added:hover {
+            color: white;
+            background: #6d28d9;
+        }
+
+        .no-results {
+            display: none;
+            padding: 38px 20px;
+            color: var(--muted);
+            text-align: center;
+            background: rgba(33, 22, 51, 0.7);
+            border: 1px dashed var(--border);
+            border-radius: 18px;
+        }
+
+        /* =========================================
+           SECTION: FOOTER
+        ========================================= */
+
+        .footer {
+            padding: 25px 15px;
+            color: #a496b8;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            font-size: 13px;
+        }
+
+        .footer span {
+            color: var(--violet);
+            font-weight: 800;
+        }
+
+        /* =========================================
+           SECTION: RESPONSIVE DESIGN
+        ========================================= */
+
+        @media (max-width: 950px) {
+            .destination-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .container {
+                width: 92%;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .navbar {
+                padding: 13px 5%;
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .brand {
+                font-size: 22px;
+            }
+
+            .nav-links {
+                width: 100%;
+            }
+
+            .nav-links a {
+                padding: 8px 11px;
+                font-size: 13px;
+            }
+
+            .container {
+                width: 92%;
+                margin: 25px auto 40px;
+            }
+
+            .district-header {
+                padding: 25px 20px;
+            }
+
+            .destination-grid {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+
+            .destination-image {
+                height: 220px;
+            }
+
+            .destination-tools {
+                flex-direction: column;
+            }
+
+            .category-filter {
+                width: 100%;
+            }
+
+            .destination-content {
+                padding: 19px;
+            }
+
+            .card-actions {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .destination-button,
+            .add-to-trip-btn {
+                width: 100%;
+                padding: 12px 8px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================================
+         SECTION: NAVBAR
+    ========================================= -->
+
+    <nav class="navbar">
+        <a href="{% url 'home' %}" class="brand">
+            <span class="brand-icon">✺</span>
+            <span class="brand-name">Utkal <span>Go</span></span>
+        </a>
+
+        <div class="nav-links">
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'trip_builder' %}" class="trip-nav">
+                🧳 Trip Builder &amp; Budget
+            </a>
+        </div>
+    </nav>
+
+    <main class="container">
+
+        <!-- =========================================
+             SECTION: DISTRICT HEADER
+        ========================================= -->
+
+        <section class="district-header">
+            <span class="eyebrow">Explore Odisha</span>
+
+            <h1>{{ district.name }} Destinations</h1>
+
+            <p>
+                {% if district.description %}
+                    {{ district.description }}
+                {% else %}
+                    Discover the temples, natural beauty, culture, and
+                    unforgettable experiences of {{ district.name }}.
+                {% endif %}
+            </p>
+
+            <div class="header-actions">
+                <a href="{% url 'home' %}" class="header-btn secondary">
+                    ← All Districts
+                </a>
+
+                <a href="{% url 'trip_builder' %}" class="header-btn primary">
+                    🧳 Open Trip Builder →
+                </a>
+            </div>
+        </section>
+
+        <!-- =========================================
+             SECTION: SEARCH AND CATEGORY FILTER
+        ========================================= -->
+
+        <section class="destination-tools">
+            <div class="search-box">
+                <input
+                    type="search"
+                    id="destinationSearch"
+                    placeholder="Search destinations..."
+                    aria-label="Search destinations"
+                    autocomplete="off"
+                >
+            </div>
+
+
+        </section>
+
+        <p class="results-label" id="resultsLabel">
+            Explore destinations in {{ district.name }}.
+        </p>
+
+        <!-- =========================================
+             SECTION: DESTINATION CARDS
+        ========================================= -->
+
+        <section class="destination-grid" id="destinationGrid">
+
+            {% for destination in destinations %}
+
+                <article
+                    class="destination-card"
+                    data-name="{{ destination.name|lower }}"
+                    data-category="{{ destination.category|lower }}"
+                >
+
+                    <!-- DESTINATION IMAGE -->
+
+                    <div class="destination-image">
+                        {% if destination.image %}
+                            <img
+                                src="{{ destination.image.url }}"
+                                alt="{{ destination.name }}"
+                                loading="lazy"
+                            >
+                        {% else %}
+                            <div class="image-placeholder" aria-hidden="true">
+                                🏞️
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- DESTINATION INFORMATION -->
+
+                    <div class="destination-content">
+
+                        <span class="category-tag">
+                            {{ destination.category|default:"Destination" }}
+                        </span>
+
+                        <h2>{{ destination.name }}</h2>
+
+                        <p>
+                            {% if destination.description %}
+                                {{ destination.description|truncatewords:30 }}
+                            {% else %}
+                                Discover this beautiful destination in
+                                {{ district.name }}, Odisha.
+                            {% endif %}
+                        </p>
+
+                        <!-- DESTINATION ACTIONS -->
+
+                        <div class="card-actions">
+
+                            <a
+                                href="{% url 'destination_detail' destination.id %}"
+                                class="destination-button"
+                            >
+                                View Details →
+                            </a>
+
+                            <button
+                                type="button"
+                                class="add-to-trip-btn"
+                                data-destination-id="{{ destination.id }}"
+                                data-destination-name="{{ destination.name }}"
+                            >
+                                + Add to Trip
+                            </button>
+
+                        </div>
+                    </div>
+                </article>
+
+            {% empty %}
+
+                <div class="no-results" style="display:block; grid-column:1/-1;">
+                    <h2>No destinations added yet</h2>
+                    <p>
+                        Destinations for this district will appear here once
+                        they have been added through Django Admin.
+                    </p>
+                </div>
+
+            {% endfor %}
+
+        </section>
+
+        <!-- SEARCH/FILTER NO-RESULTS MESSAGE -->
+
+        <div class="no-results" id="noResults">
+            <h2>No matching destinations found</h2>
+            <p>Try another search term or select a different category.</p>
+        </div>
+
+    </main>
+
+    <!-- =========================================
+         SECTION: FOOTER
+    ========================================= -->
+
+    <footer class="footer">
+        © {% now "Y" %} <span>Utkal Go</span> — Discover the beauty of Odisha.
+    </footer>
+
+    <!-- =========================================
+         SECTION: SEARCH AND CATEGORY FILTER
+    ========================================= -->
+
+    <script>
+        (function () {
+            const searchInput = document.getElementById("destinationSearch");
+            
+            const cards = document.querySelectorAll(".destination-card");
+            const noResults = document.getElementById("noResults");
+            const resultsLabel = document.getElementById("resultsLabel");
+
+            function filterDestinations() {
+                const searchText = searchInput.value.toLowerCase().trim();
+                const selectedCategory = categoryFilter.value.toLowerCase();
+
+                let visibleCount = 0;
+
+                cards.forEach(function (card) {
+                    const name = card.dataset.name || "";
+                    const category = card.dataset.category || "";
+
+                    const matchesSearch = name.includes(searchText);
+
+                    const matchesCategory =
+                        selectedCategory === "all" ||
+                        category === selectedCategory;
+
+                    const isVisible = matchesSearch && matchesCategory;
+
+                    card.classList.toggle("hidden", !isVisible);
+
+                    if (isVisible) {
+                        visibleCount++;
+                    }
+                });
+
+                noResults.style.display =
+                    cards.length > 0 && visibleCount === 0
+                        ? "block"
+                        : "none";
+
+                resultsLabel.textContent =
+                    visibleCount + (
+                        visibleCount === 1
+                            ? " destination found."
+                            : " destinations found."
+                    );
+            }
+
+            searchInput.addEventListener("input", filterDestinations);
+            categoryFilter.addEventListener("change", filterDestinations);
+
+            filterDestinations();
+        })();
+    </script>
+
+    <!-- =========================================
+         SECTION: ADD TO TRIP - SHARED STORAGE
+    ========================================= -->
+
+    <script>
+        (function () {
+            const STORAGE_KEY = "utkalGoSelectedPlaces";
+
+            function getSelectedPlaces() {
+                try {
+                    const saved = JSON.parse(
+                        localStorage.getItem(STORAGE_KEY) || "[]"
+                    );
+
+                    return Array.isArray(saved) ? saved : [];
+                } catch (error) {
+                    return [];
+                }
+            }
+
+            function saveSelectedPlaces(places) {
+                try {
+                    localStorage.setItem(
+                        STORAGE_KEY,
+                        JSON.stringify(places)
+                    );
+
+                    return true;
+                } catch (error) {
+                    alert(
+                        "Could not save your trip. Please check your browser storage settings."
+                    );
+
+                    return false;
+                }
+            }
+
+            function updateButtons() {
+                const selected = getSelectedPlaces();
+
+                document.querySelectorAll(".add-to-trip-btn").forEach(
+                    function (button) {
+                        const id = String(button.dataset.destinationId);
+
+                        const exists = selected.some(function (place) {
+                            return place &&
+                                place.id !== undefined &&
+                                String(place.id) === id;
+                        });
+
+                        button.classList.toggle("added", exists);
+
+                        button.textContent = exists
+                            ? "✓ Added to Trip"
+                            : "+ Add to Trip";
+
+                        button.setAttribute(
+                            "aria-pressed",
+                            String(exists)
+                        );
+                    }
+                );
+            }
+
+            document.querySelectorAll(".add-to-trip-btn").forEach(
+                function (button) {
+                    button.addEventListener("click", function () {
+                        const id = String(button.dataset.destinationId);
+                        const name = button.dataset.destinationName;
+
+                        if (!id || !name) {
+                            alert("Destination information is missing.");
+                            return;
+                        }
+
+                        const selected = getSelectedPlaces();
+
+                        const alreadyAdded = selected.some(
+                            function (place) {
+                                return place &&
+                                    place.id !== undefined &&
+                                    String(place.id) === id;
+                            }
+                        );
+
+                        if (alreadyAdded) {
+                            alert("This destination is already in your trip.");
+                            updateButtons();
+                            return;
+                        }
+
+                        /*
+                         * Use the same object format that tripbuilder.html
+                         * expects: { id: "...", name: "..." }
+                         */
+
+                        selected.push({
+                            id: id,
+                            name: name
+                        });
+
+                        if (!saveSelectedPlaces(selected)) {
+                            return;
+                        }
+
+                        updateButtons();
+
+                        alert(name + " added to your trip successfully!");
+                    });
+                }
+            );
+
+            /*
+             * Reflect existing selections when the district page opens.
+             */
+            updateButtons();
+
+            /*
+             * Refresh the button state if another same-origin page changes
+             * localStorage while this page is open.
+             */
+            window.addEventListener("storage", function (event) {
+                if (event.key === STORAGE_KEY) {
+                    updateButtons();
+                }
+            });
+        })();
+    </script>
+
+</body>
+</html>
