@@ -1,13 +1,12 @@
-# Python
+venv/
+.venv/
 __pycache__/
 *.py[cod]
-venv/
 .env
-
-# Local databases
-db.sqlite3
-
-# Collected production assets
+.env.*
 staticfiles/
 
-# Uploaded media backups are stored separately
+data_backup.json
+db.sqlite3
+db_backup.sqlite3
+media_backup/

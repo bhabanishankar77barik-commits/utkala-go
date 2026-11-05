@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 import os
+import dj_database_url
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -22,19 +23,33 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECURITY: Read secrets from environment variables in production.
 SECRET_KEY = os.environ.get(
-    "SECRET_KEY",
-    "django-insecure-local-development-only-change-this"
+    'SECRET_KEY',
+    'django-insecure-local-development-key'
 )
 
-# Debug is enabled locally, but disabled on the hosting server.
-DEBUG = os.environ.get("DJANGO_DEBUG", "True").lower() == "true"
+DEBUG = os.environ.get('DJANGO_DEBUG', 'True').lower() == 'true'
 
 ALLOWED_HOSTS = [
     host.strip()
     for host in os.environ.get(
-        "ALLOWED_HOSTS", "localhost,127.0.0.1"
-    ).split(",")
+        'ALLOWED_HOSTS',
+        '127.0.0.1,localhost'
+    ).split(',')
     if host.strip()
+]
+
+render_hostname = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+
+if render_hostname and render_hostname not in ALLOWED_HOSTS:
+    ALLOWED_HOSTS.append(render_hostname)
+
+CSRF_TRUSTED_ORIGINS = [
+    origin.strip()
+    for origin in os.environ.get(
+        'CSRF_TRUSTED_ORIGINS',
+        ''
+    ).split(',')
+    if origin.strip()
 ]
 
 
@@ -48,19 +63,21 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 
+    "cloudinary_storage",
+    "cloudinary",
+
     "tourism",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 ROOT_URLCONF = "utkala_go.urls"
@@ -86,28 +103,32 @@ WSGI_APPLICATION = "utkala_go.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 # DATABASE: MySQL for production; SQLite for local development
-if os.environ.get("DB_NAME"):
+# Database: TiDB on deployment, SQLite locally
+
+if os.environ.get("DB_HOST"):
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.mysql",
-            "NAME": os.environ["DB_NAME"],
-            "USER": os.environ["DB_USER"],
-            "PASSWORD": os.environ["DB_PASSWORD"],
-            "HOST": os.environ["DB_HOST"],
-            "PORT": os.environ.get("DB_PORT", "3306"),
+            "NAME": os.environ.get("DB_NAME"),
+            "USER": os.environ.get("DB_USER"),
+            "PASSWORD": os.environ.get("DB_PASSWORD"),
+            "HOST": os.environ.get("DB_HOST"),
+            "PORT": os.environ.get("DB_PORT", "4000"),
             "OPTIONS": {
-                "charset": "utf8mb4",
+                "ssl": {
+                    "ca": os.environ.get("DB_SSL_CA"),
+                },
             },
         }
     }
 else:
     DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db.sqlite3",
-        }
-    }
-
+    'default': dj_database_url.config(
+        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
+        conn_max_age=600,
+        ssl_require=bool(os.environ.get('RENDER'))
+    )
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -154,3 +175,18 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+STORAGES = {
+    "default": {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
+
+CLOUDINARY_STORAGE = {
+    "CLOUD_NAME": os.environ.get("CLOUDINARY_CLOUD_NAME"),
+    "API_KEY": os.environ.get("CLOUDINARY_API_KEY"),
+    "API_SECRET": os.environ.get("CLOUDINARY_API_SECRET"),
+}
