@@ -1044,21 +1044,22 @@
     <!-- =====================================
          NAVBAR
     ===================================== -->
+{% load static %}
 
-    <nav class="navbar">
+<nav class="navbar">
 
-        <a href="{% url 'home' %}" class="logo">
+    <a href="{% url 'home' %}" class="logo">
 
-            <img
-                src="/media/logo.png"
-                alt="Utkal Go Logo"
-            >
+        <img
+            src="{% static 'tourism/images/logo.png' %}"
+            alt="Utkal Go Logo"
+        >
 
-            <span class="logo-text">
-                Utkal Go
-            </span>
+        <span class="logo-text">
+            Utkal Go
+        </span>
 
-        </a>
+    </a>
 
         <button
             class="menu-button"

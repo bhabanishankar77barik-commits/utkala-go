@@ -1,0 +1,1201 @@
+[
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$sx1ZjnwEL290YPqJy1q1aT$YxnBpQrMoOY1f8RGff6XoiAgGk9DQCZ33EiLS1aKecc=",
+    "last_login": "2026-11-05T03:41:52.080Z",
+    "is_superuser": true,
+    "username": "swastik",
+    "first_name": "",
+    "last_name": "",
+    "email": "swastikdas539@gmail.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-11-05T03:39:46.728Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$Oe4IyZRzlDFmrtgchqCwgT$pWwfQXeNUTWUTW5GyMyjs2Z2iUtlzSW/iCzYyIa+omw=",
+    "last_login": "2026-11-05T03:57:35.033Z",
+    "is_superuser": true,
+    "username": "swastik1",
+    "first_name": "",
+    "last_name": "",
+    "email": "swastikdas539@gmail.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-11-05T03:55:56.289Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "xrg0avjnz2g4sgk0etphku6a73dy7roo",
+  "fields": {
+    "session_data": ".eJxVjEsOwjAMBe-SNYpSO3USluw5Q-XUDi2gRupnhbg7VOoCtm9m3st0vK1Dty06d6OYswFz-t0y9w-ddiB3nm7V9nVa5zHbXbEHXey1ij4vh_t3MPAyfOuoFDQiEQK45MgHEgyFE7E05MFHwIJJIEibKHqnHrO2EJviCrEz7w-mnDZr:1xOobX:xq9n7be4QIricBM1WJRGUY93rIFumX7Q3IAXBDkrrws",
+    "expire_date": "2026-11-19T03:57:35.040Z"
+  }
+},
+{
+  "model": "tourism.district",
+  "pk": 1,
+  "fields": {
+    "name": "Angul",
+    "slug": "angul",
+    "description": "Explore the culture, heritage, natural beauty and tourist attractions of Angul, Odisha.",
+    "image": "media/districts/WhatsApp_Image_2026-10-29_at_12.09.53_PM_2_aplcvt"
+  }
+},
+{
+  "model": "tourism.district",
+  "pk": 2,
+  "fields": {
+    "name": "Balangir",
+    "slug": "balangir",
+    "description": "Explore the culture, heritage, natural beauty and tourist attractions of Balangir, Odisha.",
+    "image": "media/districts/WhatsApp_Image_2026-10-29_at_6.55.07_PM_fntkdg"
+  }
+},
+{
+  "model": "tourism.district",
+  "pk": 3,
+  "fields": {
+    "name": "Balasore",
+    "slug": "balasore",
+    "description": "Explore the culture, heritage, natural beauty and tourist attractions of Balasore, Odisha.",
+    "image": "media/districts/balasoreimage_hhxu57"
+  }
+},
+{
+  "model": "tourism.district",
+  "pk": 4,
+  "fields": {
+    "name": "Bargarh",
+    "slug": "bargarh",
+    "description": "Explore the culture, heritage, natural beauty and tourist attractions of Bargarh, Odisha.",
+    "image": "media/districts/WhatsApp_Image_2026-10-29_at_8.05.17_PM_er9qoq"
+  }
+},
+{
+  "model": "tourism.district",
+  "pk": 5,
+  "fields": {
+    "name": "Bhadrak",
+    "slug": "bhadrak",
+    "description": "Explore the culture, heritage, natural beauty and tourist attractions of Bhadrak, Odisha.",
+    "image": "media/districts/WhatsApp_Image_2026-10-29_at_8.17.58_PM_lmtu75"
+  }
+},
+{
+  "model": "tourism.district",
+  "pk": 6,
+  "fields": {
+    "name": "Boudh",
+    "slug": "boudh",
+    "description": "Explore the culture, heritage, natural beauty and tourist attractions of Boudh, Odisha.",
+    "image": "media/districts/WhatsApp_Image_2026-10-30_at_9.04.13_AM_ztrbhh"
+  }
+},
+{
+  "model": "tourism.district",
+  "pk": 7,
+  "fields": {
+    "name": "Cuttack",
+    "slug": "cuttack",
+    "description": "Explore the culture, heritage, natural beauty and tourist attractions of Cuttack, Odisha.",
+    "image": "media/districts/WhatsApp_Image_2026-10-30_at_9.43.42_AM_ksot4f"
+  }
+},
+{
+  "model": "tourism.district",
+  "pk": 8,
+  "fields": {
+    "name": "Deogarh",
+    "slug": "deogarh",
+    "description": "Explore the culture, heritage, natural beauty and tourist attractions of Deogarh, Odisha.",
+    "image": "media/districts/WhatsApp_Image_2026-10-30_at_10.26.44_AM_1_booe9h"
+  }
+},
+{
+  "model": "tourism.district",
+  "pk": 9,
+  "fields": {
+    "name": "Dhenkanal",
+    "slug": "dhenkanal",
+    "description": "Explore the culture, heritage, natural beauty and tourist attractions of Dhenkanal, Odisha.",
+    "image": "media/districts/WhatsApp_Image_2026-10-30_at_10.39.25_AM_ynvybm"
+  }
+},
+{
+  "model": "tourism.district",
+  "pk": 10,
+  "fields": {
+    "name": "Gajapati",
+    "slug": "gajapati",
+    "description": "Explore the culture, heritage, natural beauty and tourist attractions of Gajapati, Odisha.",
+    "image": "media/districts/WhatsApp_Image_2026-10-30_at_6.02.06_PM_1_mrehwk"
+  }
+},
+{
+  "model": "tourism.district",
+  "pk": 11,
+  "fields": {
+    "name": "Ganjam",
+    "slug": "ganjam",
+    "description": "Explore the culture, heritage, natural beauty and tourist attractions of Ganjam, Odisha.",
+    "image": "media/districts/WhatsApp_Image_2026-10-30_at_6.18.07_PM_icgee8"
+  }
+},
+{
+  "model": "tourism.district",
+  "pk": 12,
+  "fields": {
+    "name": "Jagatsinghpur",
+    "slug": "jagatsinghpur",
+    "description": "Explore the culture, heritage, natural beauty and tourist attractions of Jagatsinghpur, Odisha.",
+    "image": "media/districts/WhatsApp_Image_2026-10-30_at_7.09.03_PM_1_wpnw62"
+  }
+},
+{
+  "model": "tourism.district",
+  "pk": 13,
+  "fields": {
+    "name": "Jajpur",
+    "slug": "jajpur",
+    "description": "Explore the culture, heritage, natural beauty and tourist attractions of Jajpur, Odisha.",
+    "image": "media/districts/WhatsApp_Image_2026-10-30_at_7.50.03_PM_1_uqbqhg"
+  }
+},
+{
+  "model": "tourism.district",
+  "pk": 14,
+  "fields": {
+    "name": "Jharsuguda",
+    "slug": "jharsuguda",
+    "description": "Explore the culture, heritage, natural beauty and tourist attractions of Jharsuguda, Odisha.",
+    "image": "media/districts/WhatsApp_Image_2026-10-30_at_10.06.11_PM_x9emle"
+  }
+},
+{
+  "model": "tourism.district",
+  "pk": 15,
+  "fields": {
+    "name": "Kalahandi",
+    "slug": "kalahandi",
+    "description": "Explore the culture, heritage, natural beauty and tourist attractions of Kalahandi, Odisha.",
+    "image": "media/districts/WhatsApp_Image_2026-10-30_at_10.25.58_PM_i3jtaa"
+  }
+},
+{
+  "model": "tourism.district",
+  "pk": 16,
+  "fields": {
+    "name": "Kandhamal",
+    "slug": "kandhamal",
+    "description": "Explore the culture, heritage, natural beauty and tourist attractions of Kandhamal, Odisha.",
+    "image": "media/districts/WhatsApp_Image_2026-10-30_at_10.44.33_PM_z2qx3w"
+  }
+},
+{
+  "model": "tourism.district",
+  "pk": 17,
+  "fields": {
+    "name": "Kendrapara",
+    "slug": "kendrapara",
+    "description": "Explore the culture, heritage, natural beauty and tourist attractions of Kendrapara, Odisha.",
+    "image": "media/districts/WhatsApp_Image_2026-10-30_at_11.11.50_PM_1_xf5xps"
+  }
+},
+{
+  "model": "tourism.district",
+  "pk": 18,
+  "fields": {
+    "name": "Kendujhar",
+    "slug": "kendujhar",
+    "description": "Explore the culture, heritage, natural beauty and tourist attractions of Kendujhar, Odisha.",
+    "image": "media/districts/WhatsApp_Image_2026-10-31_at_9.23.52_AM_kns48i"
+  }
+},
+{
+  "model": "tourism.district",
+  "pk": 19,
+  "fields": {
+    "name": "Khordha",
+    "slug": "khordha",
+    "description": "Explore the culture, heritage, natural beauty and tourist attractions of Khordha, Odisha.",
+    "image": "media/districts/bhubaneswaimages_whmijg"
+  }
+},
+{
+  "model": "tourism.district",
+  "pk": 20,
+  "fields": {
+    "name": "Koraput",
+    "slug": "koraput",
+    "description": "Explore the culture, heritage, natural beauty and tourist attractions of Koraput, Odisha.",
+    "image": "media/districts/WhatsApp_Image_2026-10-31_at_9.34.03_AM_cr5jdd"
+  }
+},
+{
+  "model": "tourism.district",
+  "pk": 21,
+  "fields": {
+    "name": "Malkangiri",
+    "slug": "malkangiri",
+    "description": "Explore the culture, heritage, natural beauty and tourist attractions of Malkangiri, Odisha.",
+    "image": "media/districts/WhatsApp_Image_2026-10-31_at_10.08.16_AM_1_oblk95"
+  }
+},
+{
+  "model": "tourism.district",
+  "pk": 22,
+  "fields": {
+    "name": "Mayurbhanj",
+    "slug": "mayurbhanj",
+    "description": "Explore the culture, heritage, natural beauty and tourist attractions of Mayurbhanj, Odisha.",
+    "image": "media/districts/sita1_xx0syx"
+  }
+},
+{
+  "model": "tourism.district",
+  "pk": 23,
+  "fields": {
+    "name": "Nabarangpur",
+    "slug": "nabarangpur",
+    "description": "Explore the culture, heritage, natural beauty and tourist attractions of Nabarangpur, Odisha.",
+    "image": "media/districts/WhatsApp_Image_2026-10-31_at_8.05.25_PM_a2ee3i"
+  }
+},
+{
+  "model": "tourism.district",
+  "pk": 24,
+  "fields": {
+    "name": "Nayagarh",
+    "slug": "nayagarh",
+    "description": "Explore the culture, heritage, natural beauty and tourist attractions of Nayagarh, Odisha.",
+    "image": "media/districts/WhatsApp_Image_2026-10-31_at_8.21.17_PM_olgsrl"
+  }
+},
+{
+  "model": "tourism.district",
+  "pk": 25,
+  "fields": {
+    "name": "Nuapada",
+    "slug": "nuapada",
+    "description": "Explore the culture, heritage, natural beauty and tourist attractions of Nuapada, Odisha.",
+    "image": "media/districts/WhatsApp_Image_2026-10-31_at_8.52.10_PM_1_fiohhl"
+  }
+},
+{
+  "model": "tourism.district",
+  "pk": 26,
+  "fields": {
+    "name": "Puri",
+    "slug": "puri",
+    "description": "Explore the culture, heritage, natural beauty and tourist attractions of Puri, Odisha.",
+    "image": "media/districts/jt1_n4za4u"
+  }
+},
+{
+  "model": "tourism.district",
+  "pk": 27,
+  "fields": {
+    "name": "Rayagada",
+    "slug": "rayagada",
+    "description": "Explore the culture, heritage, natural beauty and tourist attractions of Rayagada, Odisha.",
+    "image": "media/districts/WhatsApp_Image_2026-11-02_at_11.04.39_AM_uu1bdt"
+  }
+},
+{
+  "model": "tourism.district",
+  "pk": 28,
+  "fields": {
+    "name": "Sambalpur",
+    "slug": "sambalpur",
+    "description": "Explore the culture, heritage, natural beauty and tourist attractions of Sambalpur, Odisha.",
+    "image": "media/districts/WhatsApp_Image_2026-11-02_at_11.17.53_AM_m3aay5"
+  }
+},
+{
+  "model": "tourism.district",
+  "pk": 29,
+  "fields": {
+    "name": "Subarnapur",
+    "slug": "subarnapur",
+    "description": "Explore the culture, heritage, natural beauty and tourist attractions of Subarnapur, Odisha.",
+    "image": "media/districts/WhatsApp_Image_2026-11-02_at_11.59.40_AM_2_p12esy"
+  }
+},
+{
+  "model": "tourism.district",
+  "pk": 30,
+  "fields": {
+    "name": "Sundargarh",
+    "slug": "sundargarh",
+    "description": "Explore the culture, heritage, natural beauty and tourist attractions of Sundargarh, Odisha.",
+    "image": "media/districts/WhatsApp_Image_2026-11-02_at_1.37.14_PM_iet40n"
+  }
+},
+{
+  "model": "tourism.destination",
+  "pk": 1,
+  "fields": {
+    "district": 22,
+    "name": "Barehipani Waterfall",
+    "category": "Waterfall",
+    "description": "Barehipani Waterfall is one of Odisha’s most spectacular natural attractions, located inside Similipal National Park. It is famous for its magnificent two-tiered cascade, plunging from approximately 399 metres amid dense forests and scenic hills.",
+    "image": "media/destinations/bw3_mrvy7t",
+    "best_time": "October to March",
+    "approx_cost": "1000.00",
+    "famous_for": "One of India's tallest waterfalls",
+    "location": "Similipal National Park, Mayurbhanj, Odisha, India",
+    "latitude": "21.9336000",
+    "longitude": "86.3803000"
+  }
+},
+{
+  "model": "tourism.destination",
+  "pk": 2,
+  "fields": {
+    "district": 22,
+    "name": "Devkund Waterfall",
+    "category": "Waterfall",
+    "description": "Devkund Waterfall is a beautiful natural attraction in the Similipal region, surrounded by lush green forests and hills. The waterfall flows into a natural pool, and the site is also known for the sacred Maa Ambika Temple located above the falls. It is popular among nature lovers, pilgrims, and photographers.",
+    "image": "media/destinations/dk2_hh8ngc",
+    "best_time": "July to November",
+    "approx_cost": "800.00",
+    "famous_for": "Scenic Waterfall",
+    "location": "Devkund Road, Damasahi, Mayurbhanj, Odisha, India",
+    "latitude": "21.8667000",
+    "longitude": "86.3167000"
+  }
+},
+{
+  "model": "tourism.destination",
+  "pk": 3,
+  "fields": {
+    "district": 1,
+    "name": "Malayagiri Hills",
+    "category": "Hill Station",
+    "description": "Malayagiri Hills is a scenic mountain destination in Odisha, known for its high peaks, beautiful valleys, and lush green forests. It offers breathtaking views of the surrounding landscape and attracts trekkers and nature lovers.",
+    "image": "media/destinations/WhatsApp_Image_2026-10-29_at_12.09.53_PM_2_yvhzsp",
+    "best_time": "October to March",
+    "approx_cost": "800.00",
+    "famous_for": "Mountain Trekking",
+    "location": "Pallahara, Angul, Odisha, India",
+    "latitude": "21.3500000",
+    "longitude": "85.1500000"
+  }
+},
+{
+  "model": "tourism.destination",
+  "pk": 4,
+  "fields": {
+    "district": 1,
+    "name": "Satkosia Wildlife Sanctuary",
+    "category": "wildlife",
+    "description": "Satkosia Wildlife Sanctuary is a beautiful wildlife destination situated along the Mahanadi River. It is famous for its scenic gorge, rich biodiversity, dense forests, and wildlife including elephants, deer, crocodiles, and many species of birds.",
+    "image": "media/destinations/WhatsApp_Image_2026-10-29_at_12.09.53_PM_g8jer4",
+    "best_time": "November to March",
+    "approx_cost": "999.98",
+    "famous_for": "Wildlife Safari",
+    "location": "Satkosia, Tikarpada, Angul, Odisha, India",
+    "latitude": "20.5500000",
+    "longitude": "84.7833000"
+  }
+},
+{
+  "model": "tourism.destination",
+  "pk": 5,
+  "fields": {
+    "district": 7,
+    "name": "Ansupa Lake",
+    "category": "Lake & Natural Attraction",
+    "description": "Ansupa Lake is a picturesque freshwater lake surrounded by green hills. It is known for its scenic beauty, boating, fishing, and migratory birds during winter.",
+    "image": "media/destinations/WhatsApp_Image_2026-10-30_at_9.21.33_AM_wdeujv",
+    "best_time": "October to March",
+    "approx_cost": "500.00",
+    "famous_for": "Migratory Birds",
+    "location": "Ansupa Lake, Banki, Cuttack, Odisha, India",
+    "latitude": "20.4000000",
+    "longitude": "85.6167000"
+  }
+},
+{
+  "model": "tourism.destination",
+  "pk": 6,
+  "fields": {
+    "district": 7,
+    "name": "Barabati Fort",
+    "category": "Historical Place",
+    "description": "Barabati Fort is a historic fort built during the medieval period. It is known for its ancient stone ruins, moat, and historical significance as a former stronghold of Odisha's rulers.",
+    "image": "media/destinations/WhatsApp_Image_2026-10-30_at_9.32.56_AM_hqi79v",
+    "best_time": "October to March",
+    "approx_cost": "300.00",
+    "famous_for": "Historical Ruins",
+    "location": "Barabati Fort, Cuttack, Odisha, India",
+    "latitude": "20.4808000",
+    "longitude": "85.8687000"
+  }
+},
+{
+  "model": "tourism.destination",
+  "pk": 7,
+  "fields": {
+    "district": 8,
+    "name": "Pradhanpat Waterfall",
+    "category": "Waterfall",
+    "description": "Pradhanpat Waterfall is a beautiful natural attraction surrounded by lush green forests and rocky hills. It is known for its cascading water, peaceful atmosphere, and scenic picnic surroundings.",
+    "image": "media/destinations/WhatsApp_Image_2026-10-30_at_10.26.44_AM_1_modpou",
+    "best_time": "October to February",
+    "approx_cost": "500.00",
+    "famous_for": "Scenic Waterfall",
+    "location": "Pradhanpat, Deogarh, Odisha, India",
+    "latitude": "21.5350000",
+    "longitude": "84.7300000"
+  }
+},
+{
+  "model": "tourism.destinationimage",
+  "pk": 1,
+  "fields": {
+    "destination": 3,
+    "image": "media/destinations/gallery/WhatsApp_Image_2026-10-29_at_12.09.54_PM_pa5abr",
+    "caption": ""
+  }
+},
+{
+  "model": "tourism.destinationimage",
+  "pk": 2,
+  "fields": {
+    "destination": 3,
+    "image": "media/destinations/gallery/WhatsApp_Image_2026-10-29_at_12.09.54_PM_2_qkavkt",
+    "caption": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 1,
+  "fields": {
+    "action_time": "2026-11-05T04:16:56.368Z",
+    "user": [
+      "swastik1"
+    ],
+    "content_type": [
+      "tourism",
+      "destination"
+    ],
+    "object_id": "1",
+    "object_repr": "Barehipani Waterfall",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 2,
+  "fields": {
+    "action_time": "2026-11-05T04:48:24.735Z",
+    "user": [
+      "swastik1"
+    ],
+    "content_type": [
+      "tourism",
+      "district"
+    ],
+    "object_id": "1",
+    "object_repr": "Angul",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 3,
+  "fields": {
+    "action_time": "2026-11-05T04:49:14.671Z",
+    "user": [
+      "swastik1"
+    ],
+    "content_type": [
+      "tourism",
+      "district"
+    ],
+    "object_id": "3",
+    "object_repr": "Balasore",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 4,
+  "fields": {
+    "action_time": "2026-11-05T04:49:55.915Z",
+    "user": [
+      "swastik1"
+    ],
+    "content_type": [
+      "tourism",
+      "district"
+    ],
+    "object_id": "26",
+    "object_repr": "Puri",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 5,
+  "fields": {
+    "action_time": "2026-11-05T04:50:37.893Z",
+    "user": [
+      "swastik1"
+    ],
+    "content_type": [
+      "tourism",
+      "district"
+    ],
+    "object_id": "22",
+    "object_repr": "Mayurbhanj",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 6,
+  "fields": {
+    "action_time": "2026-11-05T04:51:20.218Z",
+    "user": [
+      "swastik1"
+    ],
+    "content_type": [
+      "tourism",
+      "district"
+    ],
+    "object_id": "16",
+    "object_repr": "Kandhamal",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 7,
+  "fields": {
+    "action_time": "2026-11-05T04:51:55.194Z",
+    "user": [
+      "swastik1"
+    ],
+    "content_type": [
+      "tourism",
+      "district"
+    ],
+    "object_id": "2",
+    "object_repr": "Balangir",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 8,
+  "fields": {
+    "action_time": "2026-11-05T04:52:16.674Z",
+    "user": [
+      "swastik1"
+    ],
+    "content_type": [
+      "tourism",
+      "district"
+    ],
+    "object_id": "4",
+    "object_repr": "Bargarh",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 9,
+  "fields": {
+    "action_time": "2026-11-05T04:52:36.528Z",
+    "user": [
+      "swastik1"
+    ],
+    "content_type": [
+      "tourism",
+      "district"
+    ],
+    "object_id": "5",
+    "object_repr": "Bhadrak",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 10,
+  "fields": {
+    "action_time": "2026-11-05T04:52:59.476Z",
+    "user": [
+      "swastik1"
+    ],
+    "content_type": [
+      "tourism",
+      "district"
+    ],
+    "object_id": "6",
+    "object_repr": "Boudh",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 11,
+  "fields": {
+    "action_time": "2026-11-05T04:53:18.406Z",
+    "user": [
+      "swastik1"
+    ],
+    "content_type": [
+      "tourism",
+      "district"
+    ],
+    "object_id": "7",
+    "object_repr": "Cuttack",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 12,
+  "fields": {
+    "action_time": "2026-11-05T04:53:41.092Z",
+    "user": [
+      "swastik1"
+    ],
+    "content_type": [
+      "tourism",
+      "district"
+    ],
+    "object_id": "8",
+    "object_repr": "Deogarh",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 13,
+  "fields": {
+    "action_time": "2026-11-05T04:54:06.075Z",
+    "user": [
+      "swastik1"
+    ],
+    "content_type": [
+      "tourism",
+      "district"
+    ],
+    "object_id": "9",
+    "object_repr": "Dhenkanal",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 14,
+  "fields": {
+    "action_time": "2026-11-05T04:54:48.181Z",
+    "user": [
+      "swastik1"
+    ],
+    "content_type": [
+      "tourism",
+      "district"
+    ],
+    "object_id": "9",
+    "object_repr": "Dhenkanal",
+    "action_flag": 2,
+    "change_message": "[]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 15,
+  "fields": {
+    "action_time": "2026-11-05T04:55:06.832Z",
+    "user": [
+      "swastik1"
+    ],
+    "content_type": [
+      "tourism",
+      "district"
+    ],
+    "object_id": "10",
+    "object_repr": "Gajapati",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 16,
+  "fields": {
+    "action_time": "2026-11-05T04:55:30.675Z",
+    "user": [
+      "swastik1"
+    ],
+    "content_type": [
+      "tourism",
+      "district"
+    ],
+    "object_id": "11",
+    "object_repr": "Ganjam",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 17,
+  "fields": {
+    "action_time": "2026-11-05T04:55:57.822Z",
+    "user": [
+      "swastik1"
+    ],
+    "content_type": [
+      "tourism",
+      "district"
+    ],
+    "object_id": "12",
+    "object_repr": "Jagatsinghpur",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 18,
+  "fields": {
+    "action_time": "2026-11-05T04:56:16.234Z",
+    "user": [
+      "swastik1"
+    ],
+    "content_type": [
+      "tourism",
+      "district"
+    ],
+    "object_id": "13",
+    "object_repr": "Jajpur",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 19,
+  "fields": {
+    "action_time": "2026-11-05T04:56:34.994Z",
+    "user": [
+      "swastik1"
+    ],
+    "content_type": [
+      "tourism",
+      "district"
+    ],
+    "object_id": "14",
+    "object_repr": "Jharsuguda",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 20,
+  "fields": {
+    "action_time": "2026-11-05T04:57:00.204Z",
+    "user": [
+      "swastik1"
+    ],
+    "content_type": [
+      "tourism",
+      "district"
+    ],
+    "object_id": "15",
+    "object_repr": "Kalahandi",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 21,
+  "fields": {
+    "action_time": "2026-11-05T04:57:53.644Z",
+    "user": [
+      "swastik1"
+    ],
+    "content_type": [
+      "tourism",
+      "district"
+    ],
+    "object_id": "17",
+    "object_repr": "Kendrapara",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 22,
+  "fields": {
+    "action_time": "2026-11-05T04:58:33.850Z",
+    "user": [
+      "swastik1"
+    ],
+    "content_type": [
+      "tourism",
+      "district"
+    ],
+    "object_id": "18",
+    "object_repr": "Kendujhar",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 23,
+  "fields": {
+    "action_time": "2026-11-05T04:59:00.087Z",
+    "user": [
+      "swastik1"
+    ],
+    "content_type": [
+      "tourism",
+      "district"
+    ],
+    "object_id": "19",
+    "object_repr": "Khordha",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 24,
+  "fields": {
+    "action_time": "2026-11-05T04:59:23.764Z",
+    "user": [
+      "swastik1"
+    ],
+    "content_type": [
+      "tourism",
+      "district"
+    ],
+    "object_id": "20",
+    "object_repr": "Koraput",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 25,
+  "fields": {
+    "action_time": "2026-11-05T04:59:40.710Z",
+    "user": [
+      "swastik1"
+    ],
+    "content_type": [
+      "tourism",
+      "district"
+    ],
+    "object_id": "21",
+    "object_repr": "Malkangiri",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 26,
+  "fields": {
+    "action_time": "2026-11-05T04:59:58.364Z",
+    "user": [
+      "swastik1"
+    ],
+    "content_type": [
+      "tourism",
+      "district"
+    ],
+    "object_id": "23",
+    "object_repr": "Nabarangpur",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 27,
+  "fields": {
+    "action_time": "2026-11-05T05:00:16.959Z",
+    "user": [
+      "swastik1"
+    ],
+    "content_type": [
+      "tourism",
+      "district"
+    ],
+    "object_id": "24",
+    "object_repr": "Nayagarh",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 28,
+  "fields": {
+    "action_time": "2026-11-05T05:00:36.813Z",
+    "user": [
+      "swastik1"
+    ],
+    "content_type": [
+      "tourism",
+      "district"
+    ],
+    "object_id": "25",
+    "object_repr": "Nuapada",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 29,
+  "fields": {
+    "action_time": "2026-11-05T05:00:54.618Z",
+    "user": [
+      "swastik1"
+    ],
+    "content_type": [
+      "tourism",
+      "district"
+    ],
+    "object_id": "27",
+    "object_repr": "Rayagada",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 30,
+  "fields": {
+    "action_time": "2026-11-05T05:01:14.057Z",
+    "user": [
+      "swastik1"
+    ],
+    "content_type": [
+      "tourism",
+      "district"
+    ],
+    "object_id": "28",
+    "object_repr": "Sambalpur",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 31,
+  "fields": {
+    "action_time": "2026-11-05T05:01:32.538Z",
+    "user": [
+      "swastik1"
+    ],
+    "content_type": [
+      "tourism",
+      "district"
+    ],
+    "object_id": "29",
+    "object_repr": "Subarnapur",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 32,
+  "fields": {
+    "action_time": "2026-11-05T05:01:49.975Z",
+    "user": [
+      "swastik1"
+    ],
+    "content_type": [
+      "tourism",
+      "district"
+    ],
+    "object_id": "30",
+    "object_repr": "Sundargarh",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 33,
+  "fields": {
+    "action_time": "2026-11-05T05:06:43.429Z",
+    "user": [
+      "swastik1"
+    ],
+    "content_type": [
+      "tourism",
+      "destination"
+    ],
+    "object_id": "2",
+    "object_repr": "Devkund Waterfall",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 34,
+  "fields": {
+    "action_time": "2026-11-05T05:09:25.011Z",
+    "user": [
+      "swastik1"
+    ],
+    "content_type": [
+      "tourism",
+      "destination"
+    ],
+    "object_id": "3",
+    "object_repr": "Malayagiri Hills",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 35,
+  "fields": {
+    "action_time": "2026-11-05T05:11:16.492Z",
+    "user": [
+      "swastik1"
+    ],
+    "content_type": [
+      "tourism",
+      "destination"
+    ],
+    "object_id": "4",
+    "object_repr": "Satkosia Wildlife Sanctuary",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 36,
+  "fields": {
+    "action_time": "2026-11-05T05:14:29.057Z",
+    "user": [
+      "swastik1"
+    ],
+    "content_type": [
+      "tourism",
+      "destination"
+    ],
+    "object_id": "5",
+    "object_repr": "Ansupa Lake",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 37,
+  "fields": {
+    "action_time": "2026-11-05T05:16:35.224Z",
+    "user": [
+      "swastik1"
+    ],
+    "content_type": [
+      "tourism",
+      "destination"
+    ],
+    "object_id": "6",
+    "object_repr": "Barabati Fort",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 38,
+  "fields": {
+    "action_time": "2026-11-05T05:18:40.076Z",
+    "user": [
+      "swastik1"
+    ],
+    "content_type": [
+      "tourism",
+      "destination"
+    ],
+    "object_id": "7",
+    "object_repr": "Pradhanpat Waterfall",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 39,
+  "fields": {
+    "action_time": "2026-11-05T07:31:59.598Z",
+    "user": [
+      "swastik1"
+    ],
+    "content_type": [
+      "tourism",
+      "destinationimage"
+    ],
+    "object_id": "1",
+    "object_repr": "Malayagiri Hills - Image",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 40,
+  "fields": {
+    "action_time": "2026-11-05T07:32:11.716Z",
+    "user": [
+      "swastik1"
+    ],
+    "content_type": [
+      "tourism",
+      "destinationimage"
+    ],
+    "object_id": "2",
+    "object_repr": "Malayagiri Hills - Image",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+}
+]
