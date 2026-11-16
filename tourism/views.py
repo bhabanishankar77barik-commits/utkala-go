@@ -1,4 +1,4 @@
-
+import json
 from django.shortcuts import get_object_or_404, render
 from django.db.models import Q
 
@@ -77,15 +77,82 @@ def destination_detail(request, pk):
     )
 
 
+
 # =========================================
 # TRIP BUILDER & BUDGET
 # =========================================
 
 def trip_builder(request):
 
+    districts = District.objects.prefetch_related(
+        "destinations"
+    ).order_by("name")
+
+    destinations = Destination.objects.select_related(
+        "district"
+    ).order_by("district__name", "name")
+
+    destination_data = []
+
+    for destination in destinations:
+
+        image_url = ""
+
+        if destination.image:
+            try:
+                image_url = destination.image.url
+            except ValueError:
+                image_url = ""
+
+        destination_data.append({
+
+            "id": destination.id,
+            "name": destination.name,
+            "district_id": destination.district_id,
+            "district_name": destination.district.name,
+            "category": destination.category,
+            "description": destination.description,
+            "image": image_url,
+            "best_time": destination.best_time,
+
+            "approx_cost": (
+                float(destination.approx_cost)
+                if destination.approx_cost is not None
+                else 0
+            ),
+
+            "famous_for": destination.famous_for,
+            "location": destination.location,
+
+            "latitude": (
+                float(destination.latitude)
+                if destination.latitude is not None
+                else None
+            ),
+
+            "longitude": (
+                float(destination.longitude)
+                if destination.longitude is not None
+                else None
+            ),
+
+        })
+
+    context = {
+        "districts": districts,
+        "total_districts": districts.count(),
+        "total_destinations": len(destination_data),
+        "destination_data": destination_data,
+    }
+
+    print("TOTAL DISTRICTS:", districts.count())
+    print("TOTAL DESTINATIONS:", len(destination_data))
+    print("DESTINATION DATA:", destination_data[:2])
+
     return render(
         request,
-        "tourism/tripbuilder.html"
+        "tourism/tripbuilder.html",
+        context
     )
 
 
