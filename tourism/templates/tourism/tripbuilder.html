@@ -2,314 +2,474 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Multi-District Trip Builder | Utkala Go</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Multi-District Trip Builder | Utkala Go</title>
+
+    <!-- Google Fonts matching home.html -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        :root {
+            --bg-dark: #080414;
+            --bg-purple: #100622;
+            --card-bg: #160a2e;
+            --purple: #7b2cff;
+            --purple-light: #b45cff;
+            --pink: #df6cff;
+            --blue: #279cff;
+            --text-white: #ffffff;
+            --text-light: #d9d0e8;
+            --text-muted: #a99fba;
+            --border: rgba(177, 91, 255, 0.25);
+            --shadow: 0 15px 50px rgba(0, 0, 0, 0.45);
+            --glow: 0 0 30px rgba(123, 44, 255, 0.25);
+        }
+
+        body {
+            font-family: "Inter", sans-serif;
+            background:
+                radial-gradient(circle at 15% 15%, rgba(123, 44, 255, 0.16), transparent 35%),
+                radial-gradient(circle at 85% 25%, rgba(39, 156, 255, 0.10), transparent 35%),
+                var(--bg-dark);
+            color: var(--text-white);
+            min-height: 100vh;
+        }
+
+        h1, h2, h3, .brand-font {
+            font-family: "Outfit", sans-serif;
+        }
+
+        .glass-navbar {
+            background: rgba(8, 4, 20, 0.88);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .glass-card {
+            background: rgba(22, 10, 46, 0.78);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #ffffff 0%, #c084fc 48%, #38bdf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .btn-gradient {
+            background: linear-gradient(135deg, var(--purple) 0%, #9333ea 100%);
+            box-shadow: 0 6px 20px rgba(123, 44, 255, 0.35);
+            transition: all 0.2s ease;
+        }
+        .btn-gradient:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 26px rgba(123, 44, 255, 0.5);
+        }
+
+        .dark-input {
+            background: rgba(11, 5, 28, 0.9);
+            border: 1px solid rgba(177, 91, 255, 0.3);
+            color: #ffffff;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .dark-input:focus {
+            outline: none;
+            border-color: var(--purple-light);
+            box-shadow: 0 0 0 3px rgba(123, 44, 255, 0.25);
+        }
+        .dark-input option {
+            background: #120726;
+            color: #ffffff;
+        }
+
+        input[type="range"] {
+            accent-color: #a855f7;
+            cursor: pointer;
+        }
+    </style>
 </head>
-<body class="bg-slate-100 text-slate-800 font-sans">
+<body>
 
-  <!-- Top Navigation Bar -->
-  <header class="bg-white border-b border-slate-200 px-6 py-3 flex items-center justify-between">
-    <a href="{% url 'home' %}" class="flex items-center gap-3">
-      <img src="{% static 'tourism/images/logo.png' %}" alt="Utkala Go" class="h-9 w-auto" />
-      <span class="font-bold text-lg text-slate-800">Utkala Go</span>
-    </a>
-    <a href="{% url 'home' %}" class="text-sm font-medium text-orange-600 hover:underline">← Back to Home</a>
-  </header>
+    <!-- Top Navigation Bar matching home.html -->
+    <header class="glass-navbar sticky top-0 z-50 px-6 md:px-14 py-4 flex items-center justify-between">
+        <a href="{% url 'home' %}" class="flex items-center gap-3">
+            <img src="{% static 'tourism/images/logo.png' %}" alt="Utkala Go" class="h-9 w-auto" />
+            <span class="brand-font font-bold text-xl tracking-tight bg-gradient-to-r from-purple-300 to-indigo-300 bg-clip-text text-transparent">
+                Utkal Go
+            </span>
+        </a>
 
-  <main class="max-w-7xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
-    <!-- LEFT COLUMN: Configuration & Unified Spot Picker -->
-    <div class="lg:col-span-8 space-y-6">
-      
-      <!-- Trip Configuration Controls -->
-      <section class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-        <h2 class="text-xl font-bold mb-4">Trip Configuration</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div>
-            <label class="block text-xs font-semibold uppercase text-slate-500 mb-1">Origin Hub</label>
-            <select id="originSelect" class="w-full border border-slate-300 rounded-lg p-2.5 text-sm"></select>
-          </div>
+        <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-[#d9d0e8]">
+            <a href="{% url 'home' %}" class="hover:text-white transition">Home</a>
+            <a href="{% url 'home' %}#about" class="hover:text-white transition">About</a>
+            <a href="{% url 'home' %}#districts" class="hover:text-white transition">Districts</a>
+            <a href="{% url 'home' %}#features" class="hover:text-white transition">Features</a>
+        </nav>
 
-          <div>
-            <label class="block text-xs font-semibold uppercase text-slate-500 mb-1">
-              Duration: <span id="daysLabel">3 Days</span>
-            </label>
-            <input id="daysInput" type="range" min="1" max="30" value="3" class="w-full accent-orange-600 mt-2" />
-          </div>
+        <a href="{% url 'home' %}" class="text-xs sm:text-sm font-medium px-4 py-2 rounded-full border border-purple-400/30 bg-purple-950/40 text-purple-200 hover:bg-purple-800/40 hover:text-white transition">
+            ← Back to Home
+        </a>
+    </header>
 
-          <div>
-            <label class="block text-xs font-semibold uppercase text-slate-500 mb-1">
-              Travelers: <span id="travelersLabel">2 People</span>
-            </label>
-            <input id="travelersInput" type="range" min="1" max="20" value="2" class="w-full accent-orange-600 mt-2" />
-          </div>
-
-          <div>
-            <label class="block text-xs font-semibold uppercase text-slate-500 mb-1">Inter-District Transport</label>
-            <select id="transportSelect" class="w-full border border-slate-300 rounded-lg p-2.5 text-sm">
-              <option value="cab">Cab / Taxi (4-seater)</option>
-              <option value="bus">Bus</option>
-              <option value="train">Train</option>
-            </select>
-          </div>
-
-          <div class="md:col-span-2">
-            <label class="block text-xs font-semibold uppercase text-slate-500 mb-1">Accommodation Tier</label>
-            <select id="tierSelect" class="w-full border border-slate-300 rounded-lg p-2.5 text-sm">
-              <option value="budget">Budget (₹1,200/room/night)</option>
-              <option value="comfort" selected>Comfort (₹2,800/room/night)</option>
-              <option value="luxury">Luxury (₹6,500/room/night)</option>
-            </select>
-          </div>
+    <!-- Hero Header Banner -->
+    <section class="max-w-7xl mx-auto px-6 pt-10 pb-4 text-center">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-purple-400/30 bg-purple-950/50 text-xs font-medium text-purple-200 mb-4">
+            <span class="w-2 h-2 rounded-full bg-purple-400 animate-pulse"></span>
+            Smart Odisha Itinerary & Budget Estimator
         </div>
+        <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight mb-3">
+            Plan Your <span class="gradient-text">Multi-District</span> Odisha Trip
+        </h1>
+        <p class="text-sm sm:text-base text-[#a99fba] max-w-2xl mx-auto">
+            Select your starting district, add destinations across Odisha, pick tourist spots, and get real-time Haversine distance and travel cost estimates.
+        </p>
+    </section>
 
-        <!-- Zero Inter-District Cost Banner -->
-        <div id="zeroCostBanner" class="hidden mt-4 p-3.5 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm">
-          <strong>Local Exploration Mode:</strong> Origin and sole destination match. Inter-district travel cost is set to <strong>₹0</strong> (local sightseeing transit still applies).
-        </div>
-      </section>
+    <main class="max-w-7xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 pb-16">
+        <!-- LEFT COLUMN: Configuration & Unified Spot Picker -->
+        <div class="lg:col-span-8 space-y-6">
 
-      <!-- Unified Spot Picker -->
-      <section class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-        <div class="flex justify-between items-center mb-4">
-          <h2 class="text-xl font-bold">Unified Spot Picker</h2>
-          <span id="spotCountBadge" class="text-xs font-medium bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full">0 Spots Selected</span>
-        </div>
-        <div id="spotPickerContainer" class="space-y-5"></div>
-      </section>
-    </div>
+            <!-- Trip Configuration Controls -->
+            <section class="glass-card p-6 rounded-2xl">
+                <div class="flex items-center gap-2.5 mb-5">
+                    <span class="w-2.5 h-6 rounded-full bg-gradient-to-b from-purple-400 to-sky-400"></span>
+                    <h2 class="text-xl font-bold text-white">Trip Configuration</h2>
+                </div>
 
-    <!-- RIGHT SIDEBAR: Consolidated Trip Tray & Cost Breakdown -->
-    <aside class="lg:col-span-4 space-y-6">
-      <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200">
-        <h2 class="text-lg font-bold mb-3">Consolidated Trip Tray</h2>
-        <ul id="activeDistrictList" class="space-y-2 mb-4"></ul>
-        <div id="addDistrictRow" class="flex gap-2">
-          <select id="addDistrictSelect" class="flex-1 border border-slate-300 rounded-lg px-2.5 py-2 text-sm"></select>
-          <button id="addDistrictBtn" type="button" class="bg-slate-800 text-white px-3.5 py-2 rounded-lg text-sm font-medium">Add</button>
-        </div>
-      </div>
-
-      <div class="bg-slate-900 text-white p-6 rounded-xl shadow-md">
-        <h2 class="text-lg font-bold mb-1">Itemized Cost Breakdown</h2>
-        <p id="distanceSummary" class="text-xs text-slate-400 mb-4"></p>
-
-        <div class="space-y-3 text-sm border-b border-slate-700 pb-4">
-          <div class="flex justify-between"><span class="text-slate-300">Inter-District Travel</span><span id="costInterDistrict" class="font-semibold">₹0</span></div>
-          <div class="flex justify-between"><span id="labelLocalTransit" class="text-slate-300">Local Spot Transit</span><span id="costLocalTransit" class="font-semibold">₹0</span></div>
-          <div class="flex justify-between"><span id="labelAccommodation" class="text-slate-300">Accommodation</span><span id="costAccommodation" class="font-semibold">₹0</span></div>
-          <div class="flex justify-between"><span class="text-slate-300">Food & Dining</span><span id="costFood" class="font-semibold">₹0</span></div>
-          <div class="flex justify-between"><span class="text-slate-300">Entry Tickets</span><span id="costTickets" class="font-semibold">₹0</span></div>
-        </div>
-
-        <div class="pt-4 space-y-1">
-          <div class="flex justify-between items-baseline">
-            <span class="text-slate-300 font-medium">Total Estimate</span>
-            <span id="totalCost" class="text-2xl font-bold text-orange-400">₹0</span>
-          </div>
-          <div class="flex justify-between text-xs text-slate-400">
-            <span id="perPersonLabel">Per-Person Estimate</span>
-            <span id="perPersonCost" class="font-semibold text-slate-200">₹0 / person</span>
-          </div>
-        </div>
-      </div>
-    </aside>
-  </main>
-
-  {{ districts_data|json_script:"districts-data" }}
-
-<script>
-  // Injected dynamically from Django database
-  const DISTRICTS = JSON.parse(document.getElementById('districts-data').textContent);
-    const INITIAL_DIST = "{{ initial_district_id }}";
-
-    const PRICING = {
-      transport: { cab: 14, bus: 2.2, train: 1.5 },
-      localCabPerKm: 16,
-      accommodation: { budget: 1200, comfort: 2800, luxury: 6500 },
-      food: { budget: 450, comfort: 900, luxury: 1800 }
-    };
-
-    const defaultOrigin = DISTRICTS.length > 0 ? DISTRICTS[0].id : '';
-    const defaultActive = INITIAL_DIST && DISTRICTS.some(d => d.id === INITIAL_DIST)
-      ? [INITIAL_DIST]
-      : (defaultOrigin ? [defaultOrigin] : []);
-
-    let state = {
-      originId: defaultOrigin,
-      activeDistrictIds: defaultActive,
-      selectedSpotIds: [],
-      days: 3,
-      travelers: 2,
-      transportMode: 'cab',
-      tier: 'comfort'
-    };
-
-    function haversineKm(c1, c2) {
-      const toRad = d => (d * Math.PI) / 180;
-      const dLat = toRad(c2.lat - c1.lat);
-      const dLng = toRad(c2.lng - c1.lng);
-      const a = Math.sin(dLat / 2) ** 2 + Math.cos(toRad(c1.lat)) * Math.cos(toRad(c2.lat)) * Math.sin(dLng / 2) ** 2;
-      return Math.round(6371 * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)) * 1.22);
-    }
-
-    const fmt = n => `₹${Math.round(n).toLocaleString('en-IN')}`;
-
-    function render() {
-      if (DISTRICTS.length === 0) return;
-
-      // 1. Origin Dropdown
-      const originSelect = document.getElementById('originSelect');
-      originSelect.innerHTML = DISTRICTS.map(d =>
-        `<option value="${d.id}" ${d.id === state.originId ? 'selected' : ''}>${d.name}</option>`
-      ).join('');
-
-      // 2. Consolidated Trip Tray
-      const listEl = document.getElementById('activeDistrictList');
-      listEl.innerHTML = state.activeDistrictIds.map((id, idx) => {
-        const d = DISTRICTS.find(x => x.id === id);
-        if (!d) return '';
-        const disabled = state.activeDistrictIds.length <= 1;
-        return `
-          <li class="flex items-center justify-between bg-slate-50 px-3 py-2 rounded-lg border border-slate-200 text-sm">
-            <span><strong class="text-orange-600 mr-1.5">#${idx + 1}</strong>${d.name}</span>
-            <button onclick="removeDistrict('${id}')" ${disabled ? 'disabled' : ''}
-              class="text-xs font-semibold px-2 py-1 rounded ${disabled ? 'text-slate-300 cursor-not-allowed' : 'text-rose-600 hover:bg-rose-50'}">
-              Remove
-            </button>
-          </li>`;
-      }).join('');
-
-      // 3. Quick-Add Dropdown
-      const available = DISTRICTS.filter(d => !state.activeDistrictIds.includes(d.id));
-      const addRow = document.getElementById('addDistrictRow');
-      if (available.length === 0) {
-        addRow.classList.add('hidden');
-      } else {
-        addRow.classList.remove('hidden');
-        document.getElementById('addDistrictSelect').innerHTML =
-          `<option value="">+ Add another district...</option>` +
-          available.map(d => `<option value="${d.id}">${d.name}</option>`).join('');
-      }
-
-      // 4. Unified Spot Picker
-      document.getElementById('spotCountBadge').textContent = `${state.selectedSpotIds.length} Spots Selected`;
-      document.getElementById('spotPickerContainer').innerHTML = state.activeDistrictIds.map(id => {
-        const d = DISTRICTS.find(x => x.id === id);
-        if (!d) return '';
-        return `
-          <div class="border border-slate-200 rounded-lg p-4 bg-slate-50/50">
-            <h3 class="font-semibold text-slate-800 mb-3">${d.name}</h3>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-              ${d.spots.map(s => {
-                const checked = state.selectedSpotIds.includes(s.id);
-                return `
-                  <label class="flex items-center justify-between p-3 rounded-lg border cursor-pointer ${checked ? 'bg-orange-50 border-orange-400' : 'bg-white border-slate-200'}">
-                    <div class="flex items-center gap-2.5">
-                      <input type="checkbox" ${checked ? 'checked' : ''} onchange="toggleSpot('${s.id}')" class="accent-orange-600 w-4 h-4" />
-                      <span class="text-sm font-medium">${s.name}</span>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-[#a99fba] mb-2">Origin Hub</label>
+                        <select id="originSelect" class="dark-input w-full rounded-xl p-3 text-sm"></select>
                     </div>
-                    <span class="text-xs font-semibold text-slate-500">${s.ticket === 0 ? 'Free' : '₹' + s.ticket}</span>
-                  </label>`;
-              }).join('')}
+
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-[#a99fba] mb-2">
+                            Duration: <span id="daysLabel" class="text-purple-300 font-bold">3 Days</span>
+                        </label>
+                        <div class="pt-2">
+                            <input id="daysInput" type="range" min="1" max="30" value="3" class="w-full" />
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-[#a99fba] mb-2">
+                            Travelers: <span id="travelersLabel" class="text-sky-300 font-bold">2 People</span>
+                        </label>
+                        <div class="pt-2">
+                            <input id="travelersInput" type="range" min="1" max="20" value="2" class="w-full" />
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-[#a99fba] mb-2">Inter-District Transport</label>
+                        <select id="transportSelect" class="dark-input w-full rounded-xl p-3 text-sm">
+                            <option value="cab">Cab / Taxi (4-seater)</option>
+                            <option value="bus">Bus</option>
+                            <option value="train">Train</option>
+                        </select>
+                    </div>
+
+                    <div class="md:col-span-2">
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-[#a99fba] mb-2">Accommodation Tier</label>
+                        <select id="tierSelect" class="dark-input w-full rounded-xl p-3 text-sm">
+                            <option value="budget">Budget (₹1,200/room/night)</option>
+                            <option value="comfort" selected>Comfort (₹2,800/room/night)</option>
+                            <option value="luxury">Luxury (₹6,500/room/night)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Zero Inter-District Cost Banner -->
+                <div id="zeroCostBanner" class="hidden mt-5 p-3.5 rounded-xl bg-emerald-950/60 border border-emerald-400/30 text-emerald-200 text-xs sm:text-sm">
+                    <strong class="text-emerald-300">Local Exploration Mode:</strong> Origin and sole destination match. Inter-district transit cost is ₹0.
+                </div>
+            </section>
+
+            <!-- Unified Spot Picker -->
+            <section class="glass-card p-6 rounded-2xl">
+                <div class="flex justify-between items-center mb-5">
+                    <div class="flex items-center gap-2.5">
+                        <span class="w-2.5 h-6 rounded-full bg-gradient-to-b from-pink-400 to-purple-500"></span>
+                        <h2 class="text-xl font-bold text-white">Unified Spot Picker</h2>
+                    </div>
+                    <span id="spotCountBadge" class="text-xs font-semibold bg-purple-500/20 border border-purple-400/30 text-purple-200 px-3 py-1.5 rounded-full">
+                        0 Spots Selected
+                    </span>
+                </div>
+                <div id="spotPickerContainer" class="space-y-5"></div>
+            </section>
+        </div>
+
+        <!-- RIGHT SIDEBAR: Consolidated Trip Tray & Cost Breakdown -->
+        <aside class="lg:col-span-4 space-y-6">
+            <div class="glass-card p-6 rounded-2xl">
+                <div class="flex items-center gap-2.5 mb-4">
+                    <span class="w-2 h-5 rounded-full bg-purple-400"></span>
+                    <h2 class="text-lg font-bold text-white">Consolidated Trip Tray</h2>
+                </div>
+                <ul id="activeDistrictList" class="space-y-2.5 mb-4"></ul>
+                <div id="addDistrictRow" class="flex gap-2">
+                    <select id="addDistrictSelect" class="dark-input flex-1 rounded-xl px-3 py-2.5 text-sm"></select>
+                    <button id="addDistrictBtn" type="button" class="btn-gradient text-white font-semibold px-4 py-2.5 rounded-xl text-sm">
+                        Add
+                    </button>
+                </div>
             </div>
-          </div>`;
-      }).join('');
 
-      // 5. Calculations
-      const origin = DISTRICTS.find(d => d.id === state.originId);
-      const activeDists = state.activeDistrictIds.map(id => DISTRICTS.find(d => d.id === id)).filter(Boolean);
-      const isLocalOnly = activeDists.length === 1 && activeDists[0].id === state.originId;
+            <div class="glass-card p-6 rounded-2xl relative overflow-hidden" style="box-shadow: var(--glow), var(--shadow);">
+                <div class="flex items-center gap-2.5 mb-1">
+                    <span class="w-2 h-5 rounded-full bg-sky-400"></span>
+                    <h2 class="text-lg font-bold text-white">Itemized Cost Breakdown</h2>
+                </div>
+                <p id="distanceSummary" class="text-xs text-[#a99fba] mb-5"></p>
 
-      document.getElementById('zeroCostBanner').classList.toggle('hidden', !isLocalOnly);
+                <div class="space-y-3 text-sm border-b border-purple-400/20 pb-5 text-[#d9d0e8]">
+                    <div class="flex justify-between">
+                        <span>Inter-District Travel</span>
+                        <span id="costInterDistrict" class="font-semibold text-white">₹0</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span id="labelLocalTransit">Local Spot Transit</span>
+                        <span id="costLocalTransit" class="font-semibold text-white">₹0</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span id="labelAccommodation">Accommodation</span>
+                        <span id="costAccommodation" class="font-semibold text-white">₹0</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Food & Dining</span>
+                        <span id="costFood" class="font-semibold text-white">₹0</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Entry Tickets</span>
+                        <span id="costTickets" class="font-semibold text-white">₹0</span>
+                    </div>
+                </div>
 
-      let interKm = 0, interCost = 0;
-      if (!isLocalOnly && origin) {
-        let prev = origin.coords;
-        activeDists.forEach(d => { interKm += haversineKm(prev, d.coords); prev = d.coords; });
-        interKm += haversineKm(prev, origin.coords);
+                <div class="pt-5 space-y-1.5">
+                    <div class="flex justify-between items-baseline">
+                        <span class="text-[#d9d0e8] font-medium">Total Estimate</span>
+                        <span id="totalCost" class="brand-font text-3xl font-extrabold gradient-text">₹0</span>
+                    </div>
+                    <div class="flex justify-between text-xs text-[#a99fba]">
+                        <span id="perPersonLabel">Per-Person Estimate</span>
+                        <span id="perPersonCost" class="font-semibold text-purple-200">₹0 / person</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </main>
 
-        if (state.transportMode === 'cab') {
-          interCost = interKm * PRICING.transport.cab * Math.ceil(state.travelers / 4);
-        } else {
-          interCost = interKm * PRICING.transport[state.transportMode] * state.travelers;
+    {{ districts_data|json_script:"districts-data" }}
+
+    <script>
+        // Injected dynamically from Django database
+        const DISTRICTS = JSON.parse(document.getElementById('districts-data').textContent);
+        const INITIAL_DIST = "{{ initial_district_id }}";
+
+        const PRICING = {
+            transport: { cab: 14, bus: 2.2, train: 1.5 },
+            localCabPerKm: 16,
+            accommodation: { budget: 1200, comfort: 2800, luxury: 6500 },
+            food: { budget: 450, comfort: 900, luxury: 1800 }
+        };
+
+        const defaultOrigin = DISTRICTS.length > 0 ? DISTRICTS[0].id : '';
+        const defaultActive = INITIAL_DIST && DISTRICTS.some(d => d.id === INITIAL_DIST)
+            ? [INITIAL_DIST]
+            : (defaultOrigin ? [defaultOrigin] : []);
+
+        let state = {
+            originId: defaultOrigin,
+            activeDistrictIds: defaultActive,
+            selectedSpotIds: [],
+            days: 3,
+            travelers: 2,
+            transportMode: 'cab',
+            tier: 'comfort'
+        };
+
+        function haversineKm(c1, c2) {
+            const toRad = d => (d * Math.PI) / 180;
+            const dLat = toRad(c2.lat - c1.lat);
+            const dLng = toRad(c2.lng - c1.lng);
+            const a = Math.sin(dLat / 2) ** 2 + Math.cos(toRad(c1.lat)) * Math.cos(toRad(c2.lat)) * Math.sin(dLng / 2) ** 2;
+            return Math.round(6371 * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)) * 1.22);
         }
-      }
 
-      let localKm = 0, ticketCost = 0;
-      activeDists.forEach(d => {
-        const chosen = d.spots.filter(s => state.selectedSpotIds.includes(s.id));
-        if (chosen.length > 0) {
-          let curr = d.coords;
-          chosen.forEach(s => {
-            localKm += haversineKm(curr, s.coords);
-            ticketCost += s.ticket * state.travelers;
-            curr = s.coords;
-          });
-          localKm += haversineKm(curr, d.coords) + 15;
+        const fmt = n => `₹${Math.round(n).toLocaleString('en-IN')}`;
+
+        function render() {
+            if (DISTRICTS.length === 0) return;
+
+            // 1. Origin Dropdown
+            const originSelect = document.getElementById('originSelect');
+            originSelect.innerHTML = DISTRICTS.map(d =>
+                `<option value="${d.id}" ${d.id === state.originId ? 'selected' : ''}>${d.name}</option>`
+            ).join('');
+
+            // 2. Consolidated Trip Tray
+            const listEl = document.getElementById('activeDistrictList');
+            listEl.innerHTML = state.activeDistrictIds.map((id, idx) => {
+                const d = DISTRICTS.find(x => x.id === id);
+                if (!d) return '';
+                const disabled = state.activeDistrictIds.length <= 1;
+                return `
+                    <li class="flex items-center justify-between bg-[#0d061f]/90 px-3.5 py-2.5 rounded-xl border border-purple-400/20">
+                        <span class="text-sm font-medium text-white">
+                            <strong class="text-purple-400 mr-2">#${idx + 1}</strong>${d.name}
+                        </span>
+                        <button onclick="removeDistrict('${id}')" ${disabled ? 'disabled' : ''}
+                            class="text-xs font-semibold px-2.5 py-1 rounded-lg transition ${disabled ? 'text-slate-600 cursor-not-allowed' : 'text-rose-400 hover:bg-rose-500/15'}">
+                            Remove
+                        </button>
+                    </li>`;
+            }).join('');
+
+            // 3. Quick-Add Dropdown
+            const available = DISTRICTS.filter(d => !state.activeDistrictIds.includes(d.id));
+            const addRow = document.getElementById('addDistrictRow');
+            if (available.length === 0) {
+                addRow.classList.add('hidden');
+            } else {
+                addRow.classList.remove('hidden');
+                document.getElementById('addDistrictSelect').innerHTML =
+                    `<option value="">+ Add another district...</option>` +
+                    available.map(d => `<option value="${d.id}">${d.name}</option>`).join('');
+            }
+
+            // 4. Unified Spot Picker
+            document.getElementById('spotCountBadge').textContent = `${state.selectedSpotIds.length} Spots Selected`;
+            document.getElementById('spotPickerContainer').innerHTML = state.activeDistrictIds.map(id => {
+                const d = DISTRICTS.find(x => x.id === id);
+                if (!d) return '';
+                return `
+                    <div class="border border-purple-400/20 rounded-xl p-4 bg-[#0d061f]/70">
+                        <h3 class="font-bold text-purple-200 mb-3 text-base">${d.name}</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            ${d.spots.length > 0 ? d.spots.map(s => {
+                                const checked = state.selectedSpotIds.includes(s.id);
+                                return `
+                                    <label class="flex items-center justify-between p-3.5 rounded-xl border cursor-pointer transition ${
+                                        checked
+                                            ? 'border-purple-400 bg-purple-600/20 shadow-[0_0_15px_rgba(123,44,255,0.25)]'
+                                            : 'border-purple-400/15 bg-[#160a2e]/70 hover:border-purple-400/40'
+                                    }">
+                                        <div class="flex items-center gap-2.5">
+                                            <input type="checkbox" ${checked ? 'checked' : ''} onchange="toggleSpot('${s.id}')" class="w-4 h-4 accent-purple-500 rounded" />
+                                            <span class="text-sm font-medium text-white">${s.name}</span>
+                                        </div>
+                                        <span class="text-xs font-semibold ${checked ? 'text-sky-300' : 'text-[#a99fba]'}">
+                                            ${s.ticket === 0 ? 'Free' : fmt(s.ticket)}
+                                        </span>
+                                    </label>`;
+                            }).join('') : `<p class="text-xs text-[#a99fba] italic">No spots added for this district yet.</p>`}
+                        </div>
+                    </div>`;
+            }).join('');
+
+            // 5. Calculations
+            const origin = DISTRICTS.find(d => d.id === state.originId);
+            const activeDists = state.activeDistrictIds.map(id => DISTRICTS.find(d => d.id === id)).filter(Boolean);
+            const isLocalOnly = activeDists.length === 1 && activeDists[0].id === state.originId;
+
+            document.getElementById('zeroCostBanner').classList.toggle('hidden', !isLocalOnly);
+
+            let interKm = 0, interCost = 0;
+            if (!isLocalOnly && origin) {
+                let prev = origin.coords;
+                activeDists.forEach(d => { interKm += haversineKm(prev, d.coords); prev = d.coords; });
+                interKm += haversineKm(prev, origin.coords);
+
+                if (state.transportMode === 'cab') {
+                    interCost = interKm * PRICING.transport.cab * Math.ceil(state.travelers / 4);
+                } else {
+                    interCost = interKm * PRICING.transport[state.transportMode] * state.travelers;
+                }
+            }
+
+            let localKm = 0, ticketCost = 0;
+            activeDists.forEach(d => {
+                const chosen = d.spots.filter(s => state.selectedSpotIds.includes(s.id));
+                if (chosen.length > 0) {
+                    let curr = d.coords;
+                    chosen.forEach(s => {
+                        localKm += haversineKm(curr, s.coords);
+                        ticketCost += s.ticket * state.travelers;
+                        curr = s.coords;
+                    });
+                    localKm += haversineKm(curr, d.coords) + 15;
+                }
+            });
+
+            const localCabs = Math.ceil(state.travelers / 4);
+            const localCost = localKm * PRICING.localCabPerKm * localCabs;
+            const rooms = Math.ceil(state.travelers / 2);
+            const nights = Math.max(1, state.days - 1);
+            const accCost = rooms * nights * PRICING.accommodation[state.tier];
+            const foodCost = state.travelers * state.days * PRICING.food[state.tier];
+            const total = interCost + localCost + accCost + foodCost + ticketCost;
+
+            // 6. Update Summary UI
+            document.getElementById('distanceSummary').textContent = `Haversine Route: ${interKm} km inter-district • ${localKm} km local`;
+            document.getElementById('costInterDistrict').textContent = fmt(interCost);
+            document.getElementById('labelLocalTransit').textContent = `Local Spot Transit (${localCabs} ${localCabs === 1 ? 'cab' : 'cabs'})`;
+            document.getElementById('costLocalTransit').textContent = fmt(localCost);
+            document.getElementById('labelAccommodation').textContent = `Accommodation (${rooms} ${rooms === 1 ? 'room' : 'rooms'} × ${nights}N)`;
+            document.getElementById('costAccommodation').textContent = fmt(accCost);
+            document.getElementById('costFood').textContent = fmt(foodCost);
+            document.getElementById('costTickets').textContent = fmt(ticketCost);
+            document.getElementById('totalCost').textContent = fmt(total);
+            document.getElementById('perPersonLabel').textContent = `Per-Person Estimate (${state.travelers} pax)`;
+            document.getElementById('perPersonCost').textContent = `${fmt(total / state.travelers)} / person`;
         }
-      });
 
-      const localCabs = Math.ceil(state.travelers / 4);
-      const localCost = localKm * PRICING.localCabPerKm * localCabs;
-      const rooms = Math.ceil(state.travelers / 2);
-      const nights = Math.max(1, state.days - 1);
-      const accCost = rooms * nights * PRICING.accommodation[state.tier];
-      const foodCost = state.travelers * state.days * PRICING.food[state.tier];
-      const total = interCost + localCost + accCost + foodCost + ticketCost;
+        window.removeDistrict = id => {
+            if (state.activeDistrictIds.length <= 1) return;
+            state.activeDistrictIds = state.activeDistrictIds.filter(x => x !== id);
+            const removed = DISTRICTS.find(d => d.id === id).spots.map(s => s.id);
+            state.selectedSpotIds = state.selectedSpotIds.filter(s => !removed.includes(s));
+            render();
+        };
 
-      // 6. Update Summary UI
-      document.getElementById('distanceSummary').textContent = `Haversine Route: ${interKm} km inter-district • ${localKm} km local`;
-      document.getElementById('costInterDistrict').textContent = fmt(interCost);
-      document.getElementById('labelLocalTransit').textContent = `Local Spot Transit (${localCabs} ${localCabs === 1 ? 'cab' : 'cabs'})`;
-      document.getElementById('costLocalTransit').textContent = fmt(localCost);
-      document.getElementById('labelAccommodation').textContent = `Accommodation (${rooms} ${rooms === 1 ? 'room' : 'rooms'} × ${nights}N)`;
-      document.getElementById('costAccommodation').textContent = fmt(accCost);
-      document.getElementById('costFood').textContent = fmt(foodCost);
-      document.getElementById('costTickets').textContent = fmt(ticketCost);
-      document.getElementById('totalCost').textContent = fmt(total);
-      document.getElementById('perPersonLabel').textContent = `Per-Person Estimate (${state.travelers} pax)`;
-      document.getElementById('perPersonCost').textContent = `${fmt(total / state.travelers)} / person`;
-    }
+        window.toggleSpot = spotId => {
+            state.selectedSpotIds = state.selectedSpotIds.includes(spotId)
+                ? state.selectedSpotIds.filter(s => s !== spotId)
+                : [...state.selectedSpotIds, spotId];
+            render();
+        };
 
-    window.removeDistrict = id => {
-      if (state.activeDistrictIds.length <= 1) return;
-      state.activeDistrictIds = state.activeDistrictIds.filter(x => x !== id);
-      const removed = DISTRICTS.find(d => d.id === id).spots.map(s => s.id);
-      state.selectedSpotIds = state.selectedSpotIds.filter(s => !removed.includes(s));
-      render();
-    };
+        document.getElementById('originSelect').onchange = e => { state.originId = e.target.value; render(); };
+        document.getElementById('daysInput').oninput = e => {
+            state.days = Number(e.target.value);
+            document.getElementById('daysLabel').textContent = `${state.days} ${state.days === 1 ? 'Day' : 'Days'}`;
+            render();
+        };
+        document.getElementById('travelersInput').oninput = e => {
+            state.travelers = Number(e.target.value);
+            document.getElementById('travelersLabel').textContent = `${state.travelers} ${state.travelers === 1 ? 'Person' : 'People'}`;
+            render();
+        };
+        document.getElementById('transportSelect').onchange = e => { state.transportMode = e.target.value; render(); };
+        document.getElementById('tierSelect').onchange = e => { state.tier = e.target.value; render(); };
+        document.getElementById('addDistrictBtn').onclick = () => {
+            const val = document.getElementById('addDistrictSelect').value;
+            if (val && !state.activeDistrictIds.includes(val)) {
+                state.activeDistrictIds.push(val);
+                render();
+            }
+        };
 
-    window.toggleSpot = spotId => {
-      state.selectedSpotIds = state.selectedSpotIds.includes(spotId)
-        ? state.selectedSpotIds.filter(s => s !== spotId)
-        : [...state.selectedSpotIds, spotId];
-      render();
-    };
-
-    document.getElementById('originSelect').onchange = e => { state.originId = e.target.value; render(); };
-    document.getElementById('daysInput').oninput = e => {
-      state.days = Number(e.target.value);
-      document.getElementById('daysLabel').textContent = `${state.days} ${state.days === 1 ? 'Day' : 'Days'}`;
-      render();
-    };
-    document.getElementById('travelersInput').oninput = e => {
-      state.travelers = Number(e.target.value);
-      document.getElementById('travelersLabel').textContent = `${state.travelers} ${state.travelers === 1 ? 'Person' : 'People'}`;
-      render();
-    };
-    document.getElementById('transportSelect').onchange = e => { state.transportMode = e.target.value; render(); };
-    document.getElementById('tierSelect').onchange = e => { state.tier = e.target.value; render(); };
-    document.getElementById('addDistrictBtn').onclick = () => {
-      const val = document.getElementById('addDistrictSelect').value;
-      if (val && !state.activeDistrictIds.includes(val)) {
-        state.activeDistrictIds.push(val);
         render();
-      }
-    };
-
-    render();
-  </script>
+    </script>
 </body>
 </html>
