@@ -83,77 +83,68 @@ def destination_detail(request, pk):
 # =========================================
 
 def trip_builder(request):
+    districts = District.objects.prefetch_related("destinations").order_by("name")
 
-    districts = District.objects.prefetch_related(
-        "destinations"
-    ).order_by("name")
+    districts_data = []
+    for district in districts:
+        # Use district latitude/longitude if your District model has them, otherwise fallback
+        d_lat = getattr(district, "latitude", None)
+        d_lng = getattr(district, "longitude", None)
 
-    destinations = Destination.objects.select_related(
-        "district"
-    ).order_by("district__name", "name")
+        spots_list = []
+        valid_lats = []
+        valid_lngs = []
 
-    destination_data = []
+        for spot in district.destinations.all().order_by("name"):
+            s_lat = float(spot.latitude) if spot.latitude is not None else None
+            s_lng = float(spot.longitude) if spot.longitude is not None else None
+            if s_lat is not None and s_lng is not None:
+                valid_lats.append(s_lat)
+                valid_lngs.append(s_lng)
 
-    for destination in destinations:
+            spots_list.append({
+                "id": str(spot.id),
+                "name": spot.name,
+                "ticket": float(spot.approx_cost) if spot.approx_cost is not None else 0,
+                "coords": {
+                    "lat": s_lat,
+                    "lng": s_lng,
+                },
+            })
 
-        image_url = ""
+        # Fallback district coordinates to average of its spots or Odisha center (20.9517, 85.0985)
+        final_d_lat = (
+            float(d_lat) if d_lat is not None
+            else (sum(valid_lats) / len(valid_lats) if valid_lats else 20.9517)
+        )
+        final_d_lng = (
+            float(d_lng) if d_lng is not None
+            else (sum(valid_lngs) / len(valid_lngs) if valid_lngs else 85.0985)
+        )
 
-        if destination.image:
-            try:
-                image_url = destination.image.url
-            except ValueError:
-                image_url = ""
+        # Ensure every spot has valid numeric coords so haversineKm never returns NaN
+        for s in spots_list:
+            if s["coords"]["lat"] is None:
+                s["coords"]["lat"] = final_d_lat
+            if s["coords"]["lng"] is None:
+                s["coords"]["lng"] = final_d_lng
 
-        destination_data.append({
-
-            "id": destination.id,
-            "name": destination.name,
-            "district_id": destination.district_id,
-            "district_name": destination.district.name,
-            "category": destination.category,
-            "description": destination.description,
-            "image": image_url,
-            "best_time": destination.best_time,
-
-            "approx_cost": (
-                float(destination.approx_cost)
-                if destination.approx_cost is not None
-                else 0
-            ),
-
-            "famous_for": destination.famous_for,
-            "location": destination.location,
-
-            "latitude": (
-                float(destination.latitude)
-                if destination.latitude is not None
-                else None
-            ),
-
-            "longitude": (
-                float(destination.longitude)
-                if destination.longitude is not None
-                else None
-            ),
-
+        districts_data.append({
+            "id": str(district.id),
+            "name": district.name,
+            "coords": {
+                "lat": final_d_lat,
+                "lng": final_d_lng,
+            },
+            "spots": spots_list,
         })
 
     context = {
         "districts": districts,
-        "total_districts": districts.count(),
-        "total_destinations": len(destination_data),
-        "destination_data": json.dumps(destination_data),
+        "districts_data": districts_data,
+        "initial_district_id": str(request.GET.get("district", "")),
     }
-
-    print("TOTAL DISTRICTS:", districts.count())
-    print("TOTAL DESTINATIONS:", len(destination_data))
-    print("DESTINATION DATA:", destination_data[:2])
-
-    return render(
-        request,
-        "tourism/tripbuilder.html",
-        context
-    )
+    return render(request, "tourism/tripbuilder.html", context)
 
 
 # =========================================
