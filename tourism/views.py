@@ -142,7 +142,7 @@ def trip_builder(request):
         "districts": districts,
         "total_districts": districts.count(),
         "total_destinations": len(destination_data),
-        "destination_data": destination_data,
+        "destination_data": json.dumps(destination_data),
     }
 
     print("TOTAL DISTRICTS:", districts.count())
