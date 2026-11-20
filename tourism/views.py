@@ -10,27 +10,39 @@ from .models import District, Destination
 # =================================
 
 def home(request):
-
-    # Fetch all districts from the database
+    query = request.GET.get("q", "").strip()
     districts = District.objects.all().order_by("name")
+    matching_spots = Destination.objects.none()
 
-    # Check whether visitor clicked View All Districts
-    show_all = request.GET.get("show_all") == "1"
+    if query:
+        districts = districts.filter(
+            Q(name__icontains=query)
+            | Q(destinations__name__icontains=query)
+            | Q(destinations__description__icontains=query)
+            | Q(destinations__famous_for__icontains=query)
+        ).distinct()
 
-    # Show only 5 districts initially
-    if show_all:
+        matching_spots = Destination.objects.select_related("district").filter(
+            Q(name__icontains=query)
+            | Q(description__icontains=query)
+            | Q(district__name__icontains=query)
+            | Q(famous_for__icontains=query)
+        ).distinct()
+
         displayed_districts = districts
+        show_all = True
     else:
-        displayed_districts = districts[:5]
+        show_all = request.GET.get("show_all") == "1"
+        displayed_districts = districts if show_all else districts[:5]
 
     context = {
         "districts": displayed_districts,
+        "matching_spots": matching_spots,
         "show_all": show_all,
         "total_districts": districts.count(),
+        "search_query": query,
     }
-
     return render(request, "tourism/home.html", context)
-
 
 # =================================
 # DISTRICT DETAILS PAGE
@@ -105,6 +117,7 @@ def trip_builder(request):
             spots_list.append({
                 "id": str(spot.id),
                 "name": spot.name,
+                "description": spot.description or "",
                 "ticket": float(spot.approx_cost) if spot.approx_cost is not None else 0,
                 "coords": {
                     "lat": s_lat,
